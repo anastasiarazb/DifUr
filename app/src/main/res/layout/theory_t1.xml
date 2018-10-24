@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:auto="http://schemas.android.com/apk/res-auto"
+        tools:context=".theory.Th1">
+    <io.github.kexanie.library.MathView
+            android:id="@+id/formula_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/to_test"
+            auto:text="When \\(a \\ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\)
+        and they are $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
+            auto:engine="KaTeX"
+    >
+    </io.github.kexanie.library.MathView>
+    <Button
+            android:text="К тестам"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/to_test"
+            android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>

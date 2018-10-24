@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:auto="http://schemas.android.com/apk/res-auto"
+        tools:context="ru.bmstu.nastasia.difur.solve.SolveHello"
+        android:layout_margin="15dp">
+
+    <TextView
+            android:text="y'="
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:id="@+id/Y" android:layout_alignBaseline="@+id/input"/>
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/Y"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/input" android:layout_weight="1" android:hint="@string/sample"/>
+    <Button
+            android:text="Принять"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
+            android:id="@+id/button_submit"/>
+    <io.github.kexanie.library.MathView
+            android:id="@+id/tex_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:text="@string/sample_tex"
+            auto:engine="KaTeX"
+            android:layout_below="@id/button_submit"
+            android:layout_above="@id/button_solve" android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true">
+    </io.github.kexanie.library.MathView>
+    <Button
+            android:text="Решить"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+            android:id="@+id/button_solve" android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+    <TextView
+            android:text="В интервале от"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignBaseline="@+id/button_solve"
+            android:id="@+id/textView2" android:layout_below="@+id/tex_input"/>
+    <EditText
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:layout_alignParentBottom="true"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2" android:layout_toEndOf="@+id/textView2"
+            android:id="@+id/editText3" android:layout_marginBottom="1dp"/>
+    <TextView
+            android:text="до"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_below="@+id/textView2"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_toRightOf="@+id/editText3" android:id="@+id/textView3"/>
+    <EditText
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:ems="10"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/textView3" android:layout_toEndOf="@+id/textView3"
+            android:layout_alignBaseline="@+id/textView2"
+            android:id="@+id/editText4" android:layout_marginBottom="0dp"/>
+
+</RelativeLayout>
