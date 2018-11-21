@@ -6,11 +6,138 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" xmlns:auto="http://schemas.android.com/apk/res-auto"
         tools:context=".theory.Th1">
+
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/conditions">
+
+        <TextView
+                android:text="Порядок уравнения n ="
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" android:id="@+id/textView4"
+                android:layout_centerHorizontal="false" android:layout_centerInParent="false"
+                android:layout_alignBaseline="@id/button4"
+                android:gravity="clip_vertical"/>
+        <EditText
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/editText5"
+                android:layout_toRightOf="@id/textView4"
+                android:hint="2" android:layout_alignBaseline="@+id/textView4" android:gravity="center_horizontal"/>
+        <Button
+                android:text="OK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/editText5"
+                android:id="@+id/button4"/>
+
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/conditions"
+                    android:id="@+id/conditions2">
+
+
+        <EditText
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="1"
+                android:ems="10"
+                android:id="@+id/editText10" android:gravity="center"/>
+        <TextView
+                android:text="y'' +"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/editText10"
+                android:layout_toRightOf="@id/editText10" android:id="@+id/textView10"/>
+        <EditText
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="-3"
+                android:ems="10"
+                android:layout_toRightOf="@id/textView10"
+                android:id="@+id/editText11" android:gravity="center"/>
+        <TextView
+                android:text="y' +"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/editText11"
+                android:layout_toRightOf="@id/editText11" android:id="@+id/textView11"/>
+        <EditText
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="2"
+                android:ems="10"
+                android:layout_toRightOf="@id/textView11"
+                android:id="@+id/editText12" android:gravity="center"/>
+        <TextView
+                android:text="y ="
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/editText12"
+                android:layout_toRightOf="@id/editText12" android:id="@+id/textView12"/>
+        <EditText
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="4"
+                android:ems="10"
+                android:layout_toRightOf="@id/textView12"
+                android:id="@+id/editText13" android:gravity="center"/>
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/conditions2"
+                    android:id="@+id/conditions1">
+
+        <TextView
+                android:text="y("
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" android:id="@+id/textView41"/>
+        <EditText
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/editText51"
+                android:layout_toRightOf="@id/textView41"
+                android:hint="-1.5" android:layout_alignBaseline="@+id/textView41" android:gravity="center_horizontal"/>
+        <TextView
+                android:text=")="
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView51"
+                android:layout_toRightOf="@id/editText51"
+                android:layout_alignBaseline="@+id/textView41" android:gravity="center_horizontal"/>
+        <EditText
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/editText61"
+                android:layout_toRightOf="@id/textView51"
+                android:hint="10" android:layout_alignBaseline="@+id/textView41" android:gravity="center_horizontal"/>
+
+    </RelativeLayout>
     <io.github.kexanie.library.MathView
             android:id="@+id/formula_two"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+
+            android:layout_below="@+id/conditions1"
             android:layout_above="@+id/to_test"
             auto:text="When \\(a \\ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\)
         and they are $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$"
@@ -18,11 +145,21 @@
     >
     </io.github.kexanie.library.MathView>
     <Button
-            android:text="К тестам"
+            android:text="Тесты"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/to_test"
             android:layout_alignParentEnd="true" android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"/>
+    <Button
+            android:text="Примеры"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true" android:id="@+id/button2"/>
+    <Button
+            android:text="Решить"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button3" android:layout_above="@+id/formula_two" android:layout_alignParentEnd="true"/>
 
 
 </RelativeLayout>
