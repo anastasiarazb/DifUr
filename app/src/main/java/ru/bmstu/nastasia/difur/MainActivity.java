@@ -27,26 +27,26 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = (TextView)findViewById(R.id.Tv);
 //        Function f = new Function("f(x, y) = x+y");
 //        tv.setText(String.valueOf(f.calculate(1, 2)));
-        Button button_theory =  (Button) findViewById(R.id.button_theory_part);
-        button_theory.setOnClickListener(new View.OnClickListener() {
+//        Button button_theory =  (Button) findViewById(R.id.button_theory_part);
+//        button_theory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                String query = message.getText().toString();
+//
+//                Log.d("LOOOOl", "\n\n\nPress\n\n\n\n");
+//                Intent childActivityIntent = new Intent(MainActivity.this,
+//                        ru.bmstu.nastasia.difur.theory.HelloPage.class);
+////                        .putExtra(Requests.EXTRA_KEY, query);
+//                if (childActivityIntent.resolveActivity(getPackageManager()) != null) {
+//                    startActivityForResult(childActivityIntent, Requests.REQUEST_CODE);
+//                }
+//            }
+//        });
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String query = message.getText().toString();
-
-                Log.d("LOOOOl", "\n\n\nPress\n\n\n\n");
                 Intent childActivityIntent = new Intent(MainActivity.this,
-                        ru.bmstu.nastasia.difur.theory.HelloPage.class);
-//                        .putExtra(Requests.EXTRA_KEY, query);
-                if (childActivityIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(childActivityIntent, Requests.REQUEST_CODE);
-                }
-            }
-        });
-        findViewById(R.id.button_solve_part).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent childActivityIntent = new Intent(MainActivity.this,
-                        ru.bmstu.nastasia.difur.solve.SolveHello.class);
+                        ru.bmstu.nastasia.difur.solve.TypeChooser.class);
                 if (childActivityIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(childActivityIntent, Requests.REQUEST_CODE);
                 }

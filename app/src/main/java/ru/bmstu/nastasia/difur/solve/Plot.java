@@ -29,7 +29,7 @@ public class Plot extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.solve_plot);
-        plot = findViewById(R.id.XYPlot);
+        plot = (XYPlot)findViewById(R.id.XYPlot);
 
         // create a couple arrays of y-values to plot:
         final Number[] domainLabels = {1, 2, 3, 6, 7, 8, 9, 10, 13, 14};

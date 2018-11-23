@@ -23,10 +23,10 @@ public class SolveHello extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.solve_hello);
-        input = findViewById(R.id.input);
-        button_submit = findViewById(R.id.button_submit);
-        button_solve = findViewById(R.id.button_solve);
-        tex_input = findViewById(R.id.tex_input);
+        input = (TextView)findViewById(R.id.input);
+        button_submit = (Button)findViewById(R.id.button_submit);
+        button_solve = (Button)findViewById(R.id.button_solve);
+        tex_input = (MathView)findViewById(R.id.tex_input);
 //        tex_input.setText("$$j$$");
         button_submit.setOnClickListener(new View.OnClickListener() {
             @Override
