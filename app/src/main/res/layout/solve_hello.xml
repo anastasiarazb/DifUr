@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent" xmlns:auto="http://schemas.android.com/apk/res-auto"
-        tools:context="ru.bmstu.nastasia.difur.solve.SolveHello"
+        tools:context=".solve.SolveHello"
         android:layout_margin="15dp">
 
     <TextView
@@ -20,7 +20,7 @@
             android:layout_toRightOf="@id/Y"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/input" android:layout_weight="1" android:hint="@string/sample"/>
+            android:id="@+id/input" android:layout_weight="1" android:hint="@string/sample_tex"/>
     <Button
             android:text="Принять"
             android:layout_width="wrap_content"

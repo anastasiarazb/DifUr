@@ -153,13 +153,13 @@
     <Button
             android:text="Примеры"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_alignParentStart="true"
+            android:layout_height="wrap_content" android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true" android:id="@+id/button2"/>
     <Button
             android:text="Решить"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button3" android:layout_above="@+id/formula_two" android:layout_alignParentEnd="true"/>
+            android:id="@+id/button3" android:layout_above="@+id/formula_two" android:layout_alignParentRight="true"/>
 
 
 </RelativeLayout>

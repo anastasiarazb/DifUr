@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="ru.bmstu.nastasia.difur.solve.Plot">
+        tools:context=".solve.Plot">
     <com.androidplot.xy.XYPlot
         android:id="@+id/XYPlot"
         android:layout_height="match_parent"
