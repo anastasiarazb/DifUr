@@ -23,18 +23,33 @@ import ru.bmstu.nastasia.difur.R;
 
 public class Plot extends AppCompatActivity {
 
+    public static class ParamNames {
+        final public static String y = "y array";
+        final public static String x = "x array";
+    }
+
     private XYPlot plot;
+
+    Double[] y;
+    Double[] x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.solve_plot);
+
+        Bundle b = this.getIntent().getExtras();
+
+        if (b == null || !b.containsKey(ParamNames.x) || ! b.containsKey(ParamNames.y)) {
+            throw new Error("solve.Plot: Not x or y array are found");
+        }
+        x = (Double[])b.get(ParamNames.x);
+        y = (Double[])b.get(ParamNames.y);
         plot = (XYPlot)findViewById(R.id.XYPlot);
 
         // create a couple arrays of y-values to plot:
-        final Number[] domainLabels = {1, 2, 3, 6, 7, 8, 9, 10, 13, 14};
-        Number[] series1Numbers = {1, 4, 2, 8, 4, 16, 8, 32, 16, 64};
-        Number[] series2Numbers = {5, 2, 10, 5, 20, 10, 40, 20, 80, 40};
+        final Number[] domainLabels = x;
+        Number[] series1Numbers = y;
+        Number[] series2Numbers = {5, 2, 10, 5, 20, 10, 40, 5, 5};
 
         // turn the above arrays into XYSeries':
         // (Y_VALS_ONLY means use the element index as the x value)

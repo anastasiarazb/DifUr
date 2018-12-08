@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import io.github.kexanie.library.MathView;
-import ru.bmstu.nastasia.difur.MainActivity;
 import ru.bmstu.nastasia.difur.R;
 
 public class SolveHello extends AppCompatActivity {

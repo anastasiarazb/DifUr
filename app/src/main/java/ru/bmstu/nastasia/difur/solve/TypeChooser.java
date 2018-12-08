@@ -19,7 +19,7 @@ public class TypeChooser extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.diff_type_select);
         setTitle("Locale Date");
 
         groupsArray = getResources().getStringArray(R.array.types);

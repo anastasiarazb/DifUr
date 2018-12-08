@@ -1,6 +1,5 @@
 package ru.bmstu.nastasia.difur.theory;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import ru.bmstu.nastasia.difur.MainActivity;
 import ru.bmstu.nastasia.difur.R;
 
 public class HelloPage extends AppCompatActivity {
