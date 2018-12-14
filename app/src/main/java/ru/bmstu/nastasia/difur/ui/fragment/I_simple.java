@@ -29,7 +29,7 @@ public class I_simple extends Fragment {
     private TextInputEditText input_fxy;
     private EditText input_y1;
     private EditText input_y2;
-    private EditText input_x1;
+//    private EditText input_x1;
     private EditText input_x2;
 
     private Context context;
@@ -37,7 +37,7 @@ public class I_simple extends Fragment {
     private FunctionInputListener listener_fxy;
     private NumberInputListener listener_y1;
     private NumberInputListener listener_y2;
-    private NumberInputListener listener_x1;
+//    private NumberInputListener listener_x1;
     private NumberInputListener listener_x2;
 
 
@@ -73,10 +73,10 @@ public class I_simple extends Fragment {
                 Function fxy = listener_fxy.getFunction();
                 Double y1 = listener_y1.getValue();
                 Double y2 = listener_y2.getValue();
-                Double x1 = listener_x1.getValue();
+//                Double x1 = listener_x1.getValue();
                 Double x2 = listener_x2.getValue();
 
-                RungeKutta solver = new RungeKutta(fxy, y1, y2, x1, x2);
+                RungeKutta solver = new RungeKutta(fxy, y1, y2, x2);
                 Intent childActivityIntent = new Intent(getActivity(),
                         ru.bmstu.nastasia.difur.solve.Plot.class)
                         .putExtra(Plot.ParamNames.x, solver.getX())
@@ -91,7 +91,7 @@ public class I_simple extends Fragment {
         input_fxy.setHint("f(x, y)");
         input_y1 = view.findViewById(R.id.input_i_simple_y1);
         input_y2 = view.findViewById(R.id.input_i_simple_y2);
-        input_x1 = view.findViewById(R.id.input_i_simple_x1);
+//        input_x1 = view.findViewById(R.id.input_i_simple_x1);
         input_x2 = view.findViewById(R.id.input_i_simple_x2);
 
         context = getContext();
@@ -103,13 +103,13 @@ public class I_simple extends Fragment {
         listener_fxy = new FunctionInputListener(context, input_fxy);
         listener_y1 = new NumberInputListener(context, input_y1);
         listener_y2 = new NumberInputListener(context, input_y2);
-        listener_x1 = new NumberInputListener(context, input_x1);
+//        listener_x1 = new NumberInputListener(context, input_x1);
         listener_x2 = new NumberInputListener(context, input_x2);
 
         input_fxy.addTextChangedListener(listener_fxy);
         input_y1.addTextChangedListener(listener_y1);
         input_y2.addTextChangedListener(listener_y2);
-        input_x1.addTextChangedListener(listener_x1);
+//        input_x1.addTextChangedListener(listener_x1);
         input_x2.addTextChangedListener(listener_x2);
 
     }
@@ -125,7 +125,7 @@ public class I_simple extends Fragment {
         return listener_fxy.checkAndSetWarning()
                 & listener_y1.checkAndSetWarning()
                 & listener_y2.checkAndSetWarning()
-                & listener_x1.checkAndSetWarning()
+//                & listener_x1.checkAndSetWarning()
                 & listener_x2.checkAndSetWarning();
     }
 }

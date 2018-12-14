@@ -29,7 +29,11 @@ public class RungeKutta{
         return abs(actual - calc);
     }
 
-    public RungeKutta(Function f, double y1, double y2, double x1, double x2) {
+
+    // f = y'= f(x, y)
+    // f(x1)=y1 - начальные условия
+    // x2 - правая граница
+    public RungeKutta(Function f, double x1, double y1, double x2) {
 //        f(x, y) = x * sqrt(y)
 //        f(t) = (((t^2.0) + 4.0) ^ 2) / 16.0
 
@@ -41,8 +45,8 @@ public class RungeKutta{
         double dt = (x2-x1)/(double)n;
         t_arr = new Double[n+1];
         y_arr = new Double[n+1];
-        t_arr[0] = y1;
-        y_arr[0] = y2;
+        t_arr[0] = x1;
+        y_arr[0] = y1;
         runge(f, t_arr, y_arr, dt);
     }
 

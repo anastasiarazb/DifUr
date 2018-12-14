@@ -36,6 +36,7 @@ public class Plot extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.solve_plot);
 
         Bundle b = this.getIntent().getExtras();
 
@@ -60,30 +61,32 @@ public class Plot extends AppCompatActivity {
 
         // create formatters to use for drawing a series using LineAndPointRenderer
         // and configure them from xml:
+        PixelUtils.init(getBaseContext());
         LineAndPointFormatter series1Format =
                 new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels);
+//                new LineAndPointFormatter();
 
-        LineAndPointFormatter series2Format =
-                new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels_2);
+//        LineAndPointFormatter series2Format =
+//                new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels_2);
 
         // add an "dash" effect to the series2 line:
-        series2Format.getLinePaint().setPathEffect(new DashPathEffect(new float[] {
+//        series2Format.getLinePaint().setPathEffect(new DashPathEffect(new float[] {
 
                 // always use DP when specifying pixel sizes, to keep things consistent across devices:
-                PixelUtils.dpToPix(20),
-                PixelUtils.dpToPix(15)}, 0));
+//                PixelUtils.dpToPix(20),
+//                PixelUtils.dpToPix(15)}, 0));
 
         // (optional) add some smoothing to the lines:
         // see: http://androidplot.com/smooth-curves-and-androidplot/
         series1Format.setInterpolationParams(
                 new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
 
-        series2Format.setInterpolationParams(
-                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
+//        series2Format.setInterpolationParams(
+//                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
 
         // add a new series' to the xyplot:
         plot.addSeries(series1, series1Format);
-        plot.addSeries(series2, series2Format);
+//        plot.addSeries(series2, series2Format);
 
         plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
             @Override
