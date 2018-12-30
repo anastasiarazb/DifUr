@@ -1,16 +1,14 @@
 package ru.bmstu.nastasia.difur.solve;
 
 
+import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.support.annotation.NonNull;
 
+import com.androidplot.ui.HorizontalPositioning;
+import com.androidplot.ui.VerticalPositioning;
 import com.androidplot.util.PixelUtils;
-import com.androidplot.xy.CatmullRomInterpolator;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYGraphWidget;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.XYSeries;
+import com.androidplot.xy.*;
 
 import java.text.FieldPosition;
 import java.text.Format;
@@ -48,22 +46,28 @@ public class Plot extends AppCompatActivity {
         plot = (XYPlot)findViewById(R.id.XYPlot);
 
         // create a couple arrays of y-values to plot:
-        final Number[] domainLabels = x;
+//        Number[] domainLabels = x;
         Number[] series1Numbers = y;
-        Number[] series2Numbers = {5, 2, 10, 5, 20, 10, 40, 5, 5};
+
+        Number[] domainLabels = new Number[x.length];
+
+        double precision = 100.;
+
+        for (int i = 0; i < x.length; ++i) {
+            domainLabels[i] = Math.round(x[i].floatValue() * precision) / precision;
+        }
 
         // turn the above arrays into XYSeries':
         // (Y_VALS_ONLY means use the element index as the x value)
         XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1");
-        XYSeries series2 = new SimpleXYSeries(
-                Arrays.asList(series2Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2");
+                Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, getBaseContext().getString(R.string.plot_series_solution));
 
         // create formatters to use for drawing a series using LineAndPointRenderer
         // and configure them from xml:
         PixelUtils.init(getBaseContext());
         LineAndPointFormatter series1Format =
                 new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels);
+        series1Format.setPointLabelFormatter(null);
 //                new LineAndPointFormatter();
 
 //        LineAndPointFormatter series2Format =
@@ -86,19 +90,38 @@ public class Plot extends AppCompatActivity {
 
         // add a new series' to the xyplot:
         plot.addSeries(series1, series1Format);
+        plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
 //        plot.addSeries(series2, series2Format);
 
-        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
-            @Override
-            public StringBuffer format(Object obj, @NonNull StringBuffer toAppendTo, @NonNull FieldPosition pos) {
-                int i = Math.round(((Number) obj).floatValue());
-                return toAppendTo.append(domainLabels[i]);
-            }
-            @Override
-            public Object parseObject(String source, @NonNull ParsePosition pos) {
-                return null;
-            }
-        });
+//        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
+//            @Override
+//            public StringBuffer format(Object obj, @NonNull StringBuffer toAppendTo, @NonNull FieldPosition pos) {
+//                int i = Math.round(((Number) obj).floatValue());
+//                return toAppendTo.append(domainLabels[i]);
+//            }
+//            @Override
+//            public Object parseObject(String source, @NonNull ParsePosition pos) {
+//                return null;
+//            }
+//        });
+        plot.getGraph().getDomainGridLinePaint().setColor(Color.TRANSPARENT);
+        //set all domain lines to transperent
+
+//        plot.getGraph().getRangeSubGridLinePaint().setColor(Color.TRANSPARENT);
+        //set all range lines to transperent
+
+//        plot.getGraph().getRangeGridLinePaint().setColor(Color.TRANSPARENT);
+        //set all sub range lines to transperent
+
+        plot.getGraph().getDomainSubGridLinePaint().setColor(Color.TRANSPARENT);
+        //set all sub domain lines to transperent
+
+
+        plot.getGraph().getGridBackgroundPaint().setColor(Color.WHITE);
+        //set background to white to transperent
+        plot.getGraph().position(
+                0, HorizontalPositioning.ABSOLUTE_FROM_LEFT,
+                0, VerticalPositioning.ABSOLUTE_FROM_TOP);
     }
 
     @Override

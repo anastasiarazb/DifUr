@@ -7,10 +7,11 @@
         android:layout_height="match_parent"
         tools:context=".solve.Plot">
     <com.androidplot.xy.XYPlot
-        android:id="@+id/XYPlot"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
+            style="@style/APDefacto.Light"
+            android:id="@+id/XYPlot"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_margin="15dp"
 
     />
 
