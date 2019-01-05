@@ -7,13 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.solve.Plot;
 import ru.bmstu.nastasia.difur.solve.RungeKutta;
@@ -35,10 +34,14 @@ public class I_simple extends Fragment {
     private Context context;
 
     private FunctionInputListener listener_fxy;
+    private FunctionInputListener listener_solution;
     private NumberInputListener listener_y1;
     private NumberInputListener listener_y2;
 //    private NumberInputListener listener_x1;
     private NumberInputListener listener_x2;
+    private CheckBox input_solution_cb;
+    private TextInputEditText input_solution;
+    private CardView solution_cv;
 
 
 
@@ -61,6 +64,19 @@ public class I_simple extends Fragment {
     }
 
     private void initFields(View view) {
+        solution_cv = view.findViewById(R.id.solution_cv_1);
+        solution_cv.setVisibility(View.INVISIBLE);
+        input_solution_cb = view.findViewById(R.id.solution_cb_1);
+        input_solution_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    solution_cv.setVisibility(View.VISIBLE);
+                } else {
+                    solution_cv.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
         button_res = view.findViewById(R.id.button);
         button_res.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +109,7 @@ public class I_simple extends Fragment {
         input_y2 = view.findViewById(R.id.input_i_simple_y2);
 //        input_x1 = view.findViewById(R.id.input_i_simple_x1);
         input_x2 = view.findViewById(R.id.input_i_simple_x2);
+        input_solution = view.findViewById(R.id.input_solution_1);
 
         context = getContext();
 
@@ -100,7 +117,8 @@ public class I_simple extends Fragment {
             throw new RuntimeException("I_simple.initFields: Null context");
         }
 
-        listener_fxy = new FunctionInputListener(context, input_fxy);
+        listener_fxy = new FunctionInputListener(context, input_fxy, "f(x, y)");
+        listener_solution = new FunctionInputListener(context, input_solution, "y(x)");
         listener_y1 = new NumberInputListener(context, input_y1);
         listener_y2 = new NumberInputListener(context, input_y2);
 //        listener_x1 = new NumberInputListener(context, input_x1);
@@ -111,6 +129,8 @@ public class I_simple extends Fragment {
         input_y2.addTextChangedListener(listener_y2);
 //        input_x1.addTextChangedListener(listener_x1);
         input_x2.addTextChangedListener(listener_x2);
+
+        input_solution = view.findViewById(R.id.input_solution_1);
 
     }
 
@@ -126,6 +146,9 @@ public class I_simple extends Fragment {
                 & listener_y1.checkAndSetWarning()
                 & listener_y2.checkAndSetWarning()
 //                & listener_x1.checkAndSetWarning()
-                & listener_x2.checkAndSetWarning();
+                & listener_x2.checkAndSetWarning()
+                & (!input_solution_cb.isChecked()
+                    || (listener_solution.checkVal() == null) // empty optional string, pass
+                    || listener_solution.checkAndSetWarning());
     }
 }
