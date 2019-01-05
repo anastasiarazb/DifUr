@@ -1,6 +1,7 @@
 package ru.bmstu.nastasia.difur.ui.fragment;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,19 +16,23 @@ public class FunctionInputListener implements TextWatcher {
     private String value;
     private Function mFunction;
     private String   mErrormessage;
+    private String   mFuncName;
 
-    FunctionInputListener(Context context, TextInputEditText edittextview) {
+    FunctionInputListener(Context context, TextInputEditText edittextview, @Nullable String func_headline) {
         this.mContext = context;
         this.mEdittextview = edittextview;
         this.mErrormessage = context.getString(R.string.warning_incorrect);
+        this.mFuncName = func_headline != null
+                ? func_headline
+                : "f(x)";
     }
 
     Boolean checkVal() {
         value = mEdittextview.getEditableText().toString();
-        if (value.isEmpty()) {
+        if (value.trim().isEmpty()) {
             return null;
         }
-        mFunction = new Function("f(x, y)=" + value);
+        mFunction = new Function(mFuncName + "=" + value);
         return mFunction.checkSyntax();
     }
 
