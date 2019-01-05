@@ -14,7 +14,8 @@
 
     <string name="warning_fill_all">Не все поля заполнены</string>
     <string name="warning_incorrect">Некорректный ввод</string>
-    <string name="plot_series_solution">Решение</string>
+    <string name="plot_series_solution">Численное решение</string>
+    <string name="plot_series_user_solution">Пользовательское решение</string>
     <string name="solve">Решить</string>
     <string name="x_from">x от</string>
     <string name="x_to">до</string>

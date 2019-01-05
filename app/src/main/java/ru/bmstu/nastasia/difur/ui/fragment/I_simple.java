@@ -97,6 +97,19 @@ public class I_simple extends Fragment {
                         ru.bmstu.nastasia.difur.solve.Plot.class)
                         .putExtra(Plot.ParamNames.x, solver.getX())
                         .putExtra(Plot.ParamNames.y, solver.getY());
+
+                if (input_solution_cb.isChecked()
+                        && (listener_solution.checkVal() != null)) {
+                    // Generate user solution points
+                    Function solution = listener_solution.getFunction();
+                    Double[] x = solver.getX();
+                    Double[] y = new Double[x.length];
+                    for (int i = 0; i < y.length; ++i) {
+                        y[i] = solution.calculate(x[i]);
+                    }
+                    childActivityIntent.putExtra(Plot.ParamNames.y2, y);
+                }
+
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(childActivityIntent, MainActivity.Requests.REQUEST_CODE);
                 }

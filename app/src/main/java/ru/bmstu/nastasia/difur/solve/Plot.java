@@ -20,12 +20,26 @@ public class Plot extends AppCompatActivity {
     public static class ParamNames {
         final public static String y = "y array";
         final public static String x = "x array";
+        final public static String y2 = "y2 array";
     }
 
     private XYPlot plot;
 
-    Double[] y;
-    Double[] x;
+    private Double[] y;
+    private Double[] x;
+
+    void addSeries(Double[] y, @Nullable String label, int formatter) {
+        XYSeries series = new SimpleXYSeries(
+                Arrays.asList(y), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, getBaseContext().getString(R.string.plot_series_solution));
+        LineAndPointFormatter seriesFormat =
+                new LineAndPointFormatter(this, formatter);
+        seriesFormat.setPointLabelFormatter(null);
+        // (optional) add some smoothing to the lines: http://androidplot.com/smooth-curves-and-androidplot/
+        seriesFormat.setInterpolationParams(
+                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
+        plot.addSeries(series, seriesFormat);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,22 +68,18 @@ public class Plot extends AppCompatActivity {
         }
 
         // turn the above arrays into XYSeries': (Y_VALS_ONLY means use the element index as the x value)
-        XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, getBaseContext().getString(R.string.plot_series_solution));
+//        XYSeries series1 = new SimpleXYSeries(
+//                Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, getBaseContext().getString(R.string.plot_series_solution));
 
         // create formatters to use for drawing a series using LineAndPointRenderer and configure them from xml:
         PixelUtils.init(getBaseContext());
-        LineAndPointFormatter series1Format =
-                new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels);
-        series1Format.setPointLabelFormatter(null);
 
-        // (optional) add some smoothing to the lines: http://androidplot.com/smooth-curves-and-androidplot/
-        series1Format.setInterpolationParams(
-                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
+        addSeries(y, getBaseContext().getString(R.string.plot_series_solution), R.xml.line_point_formatter_with_labels);
 
-
-        // add a new series' to the xyplot:
-        plot.addSeries(series1, series1Format);
+        if (b.containsKey(ParamNames.y2)) {
+            addSeries((Double[])b.get(ParamNames.y2), getBaseContext().getString(R.string.plot_series_user_solution),
+                    R.xml.line_point_formatter_with_labels_2);
+        }
         plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
         plot.getGraph().getDomainGridLinePaint().setColor(Color.TRANSPARENT);
         plot.getGraph().getDomainSubGridLinePaint().setColor(Color.TRANSPARENT);
