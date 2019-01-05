@@ -2,17 +2,13 @@ package ru.bmstu.nastasia.difur.solve;
 
 
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.androidplot.ui.HorizontalPositioning;
 import com.androidplot.ui.VerticalPositioning;
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
 
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParsePosition;
 import java.util.Arrays;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,68 +53,27 @@ public class Plot extends AppCompatActivity {
             domainLabels[i] = Math.round(x[i].floatValue() * precision) / precision;
         }
 
-        // turn the above arrays into XYSeries':
-        // (Y_VALS_ONLY means use the element index as the x value)
+        // turn the above arrays into XYSeries': (Y_VALS_ONLY means use the element index as the x value)
         XYSeries series1 = new SimpleXYSeries(
                 Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, getBaseContext().getString(R.string.plot_series_solution));
 
-        // create formatters to use for drawing a series using LineAndPointRenderer
-        // and configure them from xml:
+        // create formatters to use for drawing a series using LineAndPointRenderer and configure them from xml:
         PixelUtils.init(getBaseContext());
         LineAndPointFormatter series1Format =
                 new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels);
         series1Format.setPointLabelFormatter(null);
-//                new LineAndPointFormatter();
 
-//        LineAndPointFormatter series2Format =
-//                new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels_2);
-
-        // add an "dash" effect to the series2 line:
-//        series2Format.getLinePaint().setPathEffect(new DashPathEffect(new float[] {
-
-                // always use DP when specifying pixel sizes, to keep things consistent across devices:
-//                PixelUtils.dpToPix(20),
-//                PixelUtils.dpToPix(15)}, 0));
-
-        // (optional) add some smoothing to the lines:
-        // see: http://androidplot.com/smooth-curves-and-androidplot/
+        // (optional) add some smoothing to the lines: http://androidplot.com/smooth-curves-and-androidplot/
         series1Format.setInterpolationParams(
                 new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
 
-//        series2Format.setInterpolationParams(
-//                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
 
         // add a new series' to the xyplot:
         plot.addSeries(series1, series1Format);
         plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
-//        plot.addSeries(series2, series2Format);
-
-//        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
-//            @Override
-//            public StringBuffer format(Object obj, @NonNull StringBuffer toAppendTo, @NonNull FieldPosition pos) {
-//                int i = Math.round(((Number) obj).floatValue());
-//                return toAppendTo.append(domainLabels[i]);
-//            }
-//            @Override
-//            public Object parseObject(String source, @NonNull ParsePosition pos) {
-//                return null;
-//            }
-//        });
         plot.getGraph().getDomainGridLinePaint().setColor(Color.TRANSPARENT);
-        //set all domain lines to transperent
-
-//        plot.getGraph().getRangeSubGridLinePaint().setColor(Color.TRANSPARENT);
-        //set all range lines to transperent
-
-//        plot.getGraph().getRangeGridLinePaint().setColor(Color.TRANSPARENT);
-        //set all sub range lines to transperent
-
         plot.getGraph().getDomainSubGridLinePaint().setColor(Color.TRANSPARENT);
-        //set all sub domain lines to transperent
-
-
         plot.getGraph().getGridBackgroundPaint().setColor(Color.WHITE);
-        //set background to white to transperent
         plot.getGraph().position(
                 0, HorizontalPositioning.ABSOLUTE_FROM_LEFT,
                 0, VerticalPositioning.ABSOLUTE_FROM_TOP);
