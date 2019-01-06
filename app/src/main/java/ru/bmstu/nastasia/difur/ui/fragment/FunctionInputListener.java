@@ -28,7 +28,7 @@ public class FunctionInputListener implements TextWatcher {
     }
 
     Boolean checkVal() {
-        value = mEdittextview.getEditableText().toString();
+        value = mEdittextview.getEditableText().toString().replace('÷', '/');
         if (value.trim().isEmpty()) {
             return null;
         }
