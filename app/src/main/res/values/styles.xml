@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="colorPrimary">@color/primary</item>-->
+        <!--<item name="colorPrimaryDark">@color/primary_dark</item>-->
+        <!--<item name="colorAccent">@color/accent</item>-->
+        <item name="cardViewStyle">@style/CardView</item>
+        <item name="textInputStyle">@style/TextInput</item>
+
     </style>
 
     <style name="Toolbar">
@@ -22,5 +28,30 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
     <style name="TextHardcoded"></style>
+
+    <style name="DifurCardViewStyle" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPaddingBottom">8dp</item>
+        <item name="contentPaddingTop">8dp</item>
+        <item name="contentPaddingLeft">8dp</item>
+        <item name="contentPaddingRight">8dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="cardBackgroundColor">@color/ap_white</item>
+    </style>
+
+    <style name="InnerContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="HorizontalContainer" parent="InnerContainer">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VerticalContainer" parent="InnerContainer">
+        <item name="android:orientation">vertical</item>
+    </style>
+
 
 </resources>
