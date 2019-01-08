@@ -65,7 +65,7 @@ public class I_simple extends Fragment {
 
     private void initFields(View view) {
         solution_cv = view.findViewById(R.id.solution_cv_1);
-        solution_cv.setVisibility(View.INVISIBLE);
+        solution_cv.setVisibility(View.GONE);
         input_solution_cb = view.findViewById(R.id.solution_cb_1);
         input_solution_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -73,7 +73,7 @@ public class I_simple extends Fragment {
                 if(isChecked) {
                     solution_cv.setVisibility(View.VISIBLE);
                 } else {
-                    solution_cv.setVisibility(View.INVISIBLE);
+                    solution_cv.setVisibility(View.GONE);
                 }
             }
         });
@@ -96,7 +96,8 @@ public class I_simple extends Fragment {
                 Intent childActivityIntent = new Intent(getActivity(),
                         ru.bmstu.nastasia.difur.solve.Plot.class)
                         .putExtra(Plot.ParamNames.x, solver.getX())
-                        .putExtra(Plot.ParamNames.y, solver.getY());
+                        .putExtra(Plot.ParamNames.y, solver.getY())
+                        .putExtra(Plot.ParamNames.equation, input_fxy.getEditableText().toString());
 
                 if (input_solution_cb.isChecked()
                         && (listener_solution.checkVal() != null)) {
@@ -107,7 +108,9 @@ public class I_simple extends Fragment {
                     for (int i = 0; i < y.length; ++i) {
                         y[i] = solution.calculate(x[i]);
                     }
-                    childActivityIntent.putExtra(Plot.ParamNames.y2, y);
+                    childActivityIntent
+                            .putExtra(Plot.ParamNames.y2, y)
+                            .putExtra(Plot.ParamNames.user_solution, input_solution.getEditableText().toString());
                 }
 
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {

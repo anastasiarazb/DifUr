@@ -4,6 +4,7 @@ package ru.bmstu.nastasia.difur.solve;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 
+import android.view.View;
 import com.androidplot.ui.HorizontalPositioning;
 import com.androidplot.ui.VerticalPositioning;
 import com.androidplot.util.PixelUtils;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
 
 public class Plot extends AppCompatActivity {
@@ -21,12 +23,17 @@ public class Plot extends AppCompatActivity {
         final public static String y = "y array";
         final public static String x = "x array";
         final public static String y2 = "y2 array";
+        final public static String equation = "equation";
+        final public static String user_solution = "user solution";
     }
 
     private XYPlot plot;
 
     private Double[] y;
     private Double[] x;
+
+    private MathView tex_equation;
+    private MathView tex_user_solution;
 
     void addSeries(Double[] y, @Nullable String label, int formatter) {
         XYSeries series = new SimpleXYSeries(
@@ -46,10 +53,25 @@ public class Plot extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.solve_plot);
 
+        tex_equation = findViewById(R.id.tex_solution_1);
+        tex_user_solution = findViewById(R.id.tex_solution_user_1);
+
+
         Bundle b = this.getIntent().getExtras();
 
         if (b == null || !b.containsKey(ParamNames.x) || ! b.containsKey(ParamNames.y)) {
             throw new Error("solve.Plot: Not x or y array are found");
+        }
+
+        if (b.containsKey(ParamNames.equation)) {
+            tex_equation.setText("$$y' = " + b.getString(ParamNames.equation) + "$$");
+        }
+
+        if (b.containsKey(ParamNames.user_solution)) {
+            tex_user_solution.setText("$$y(x) = " + b.getString(ParamNames.user_solution) + "$$");
+            findViewById(R.id.user_solution_container).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.user_solution_container).setVisibility(View.GONE);
         }
         x = (Double[])b.get(ParamNames.x);
         y = (Double[])b.get(ParamNames.y);

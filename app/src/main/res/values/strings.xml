@@ -12,6 +12,7 @@
     <string name="drawer_item_open_source">Open Source</string>
     <string name="drawer_item_contact">Contact</string>
 
+    <!--fragment_du_1_simple.xml-->
     <string name="warning_fill_all">Не все поля заполнены</string>
     <string name="warning_incorrect">Некорректный ввод</string>
     <string name="plot_series_solution">Численное решение</string>
@@ -20,6 +21,11 @@
     <string name="x_from">x от</string>
     <string name="x_to">до</string>
     <string name="insert_solution">Сравнить решения</string>
+
+    <!--solve_plot.xml-->
+    <string name="plot_equation">Уравнение</string>
+    <string name="plot_solution">Введенное решение</string>
+
 
 
     <string-array name="types">
