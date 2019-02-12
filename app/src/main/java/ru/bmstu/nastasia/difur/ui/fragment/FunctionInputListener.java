@@ -18,7 +18,7 @@ public class FunctionInputListener implements TextWatcher {
     private String   mErrormessage;
     private String   mFuncName;
 
-    FunctionInputListener(Context context, TextInputEditText edittextview, @Nullable String func_headline) {
+    public FunctionInputListener(Context context, TextInputEditText edittextview, @Nullable String func_headline) {
         this.mContext = context;
         this.mEdittextview = edittextview;
         this.mErrormessage = context.getString(R.string.warning_incorrect);
@@ -27,7 +27,7 @@ public class FunctionInputListener implements TextWatcher {
                 : "f(x)";
     }
 
-    Boolean checkVal() {
+    public Boolean checkVal() {
         value = mEdittextview.getEditableText().toString().replace('÷', '/');
         if (value.trim().isEmpty()) {
             return null;
@@ -59,7 +59,7 @@ public class FunctionInputListener implements TextWatcher {
                 : null;
     }
 
-    boolean checkAndSetWarning() {
+    public boolean checkAndSetWarning() {
         if (checkVal() == Boolean.TRUE) {
             return true;
         } else {
