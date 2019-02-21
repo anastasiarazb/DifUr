@@ -55,6 +55,9 @@ public class System_simple extends Fragment {
         button_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateRowsNumber();
+                function_adapter.update(rows_number);
+                function_adapter.notifyDataSetChanged();
 
             }
         });
@@ -64,6 +67,26 @@ public class System_simple extends Fragment {
             @Override
             public void onClick(View view) {
                 checkFunctions();
+                ArrayList<FunctionInputListener> listeners = function_adapter.getInputListeners();
+                boolean is_ok = true;
+                ArrayList<Function> functions = new ArrayList<>(listeners.size());
+                for (FunctionInputListener listener: listeners) {
+                    Boolean val = listener.checkVal();
+                    if (val != null) {
+                        is_ok &= val;
+                        functions.add(listener.getFunction());
+                    }
+                }
+                if (!is_ok) {
+                    Toast.makeText(context, R.string.warning_incorrect, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                StringBuilder sb = new StringBuilder();
+                for (Function f: functions) {
+                    sb.append(f.toString() + "\n");
+                }
+                Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -72,6 +95,11 @@ public class System_simple extends Fragment {
             throw new RuntimeException("I_simple.initFields: Null context");
         }
 
+    }
+
+    private int updateRowsNumber() {
+        rows_number = Integer.parseInt(row_number_et.getText().toString());
+        return rows_number;
     }
 
     private boolean checkFunctions() {
