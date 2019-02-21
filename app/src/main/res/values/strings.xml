@@ -19,7 +19,8 @@
     <string name="plot_series_user_solution">Пользовательское решение</string>
     <string name="solve">Решить</string>
     <string name="x_from">x от</string>
-    <string name="x_to">до</string>
+    <string name="x_to">х до</string>
+    <string name="to">до</string>
     <string name="insert_solution">Сравнить решения</string>
 
     <!--solve_plot.xml-->

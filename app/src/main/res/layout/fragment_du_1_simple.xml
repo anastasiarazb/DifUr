@@ -104,7 +104,7 @@
                                   android:paddingLeft="15dp">
                         <TextView
                                 android:id="@+id/textView7"
-                                android:text="@string/x_from"
+                                android:text="@string/x_to"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                         <EditText
