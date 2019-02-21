@@ -45,7 +45,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         private FunctionInputListener listener;
 
 
-        public InputHolder(View itemView) {
+        InputHolder(View itemView) {
             super(itemView);
             func_name = itemView.findViewById(R.id.adapter_text_view);
             input_func = itemView.findViewById(R.id.adapter_input_fxy);
@@ -60,11 +60,11 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
             });
         }
 
-        public boolean checkInput() {
+        boolean checkInput() {
             return listener.checkAndSetWarning();
         }
 
-        public FunctionInputListener getListener() {
+        FunctionInputListener getListener() {
             return listener;
         }
 
