@@ -27,6 +27,19 @@ public class FunctionInputListener implements TextWatcher {
                 : "f(x)";
     }
 
+    public FunctionInputListener(Context context, TextInputEditText edittextview, int n) {
+        this.mContext = context;
+        this.mEdittextview = edittextview;
+        this.mErrormessage = context.getString(R.string.warning_incorrect);
+        StringBuilder sb = new StringBuilder();
+        sb.append("f(x");
+        for (int i = 1; i <= n; ++i) {
+            sb.append(", y").append(i);
+        }
+        sb.append(')');
+        this.mFuncName = sb.toString();
+    }
+
     public Boolean checkVal() {
         value = mEdittextview.getEditableText().toString().replace('÷', '/');
         if (value.trim().isEmpty()) {
