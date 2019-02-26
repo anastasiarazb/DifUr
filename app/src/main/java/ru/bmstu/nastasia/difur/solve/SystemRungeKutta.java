@@ -1,41 +1,58 @@
-package ru.bmstu.nastasia.difur.solve;
-
+package ru.bmstu.nastasia;
 
 import org.mariuszgromada.math.mxparser.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static java.lang.Math.abs;
 
 public class SystemRungeKutta {
 
-    public Double[] getX() {
-        Double[] _x = new Double[t.length];
-        for (int i = 0; i < t.length; ++i) {
-            _x[i] = t[i];
-        }
-        return _x;
-    }
+//    static void runge(Function yp_func, double[] t, double[] y, double dt) {
+//
+//        for (int n = 0; n < t.length - 1; n++) {
+//            double dy1 = dt * yp_func.calculate(t[n], y[n]);
+//            double dy2 = dt * yp_func.calculate(t[n] + dt / 2.0, y[n] + dy1 / 2.0);
+//            double dy3 = dt * yp_func.calculate(t[n] + dt / 2.0, y[n] + dy2 / 2.0);
+//            double dy4 = dt * yp_func.calculate(t[n] + dt, y[n] + dy3);
+//            t[n + 1] = t[n] + dt;
+//            y[n + 1] = y[n] + (dy1 + 2.0 * (dy2 + dy3) + dy4) / 6.0;
+//        }
+//    }
+
+    private ArrayList<Function> F;
+    private int N;
 
     public Double[][] getY() {
         int n = Y.length;
         int m = Y[0].length;
-        Double[][] _Y = new Double[n][m];
+        Double[][] res = new Double[n][m];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                _Y[i][j] = Y[i][j];
+                res[i][j] = Y[i][j];
             }
         }
-        return _Y;
+        return res;
     }
 
-    private double[] t;
+    public Double[] getX() {
+        Double[] res = new Double[t.length];
+        for (int i = 0; i < t.length; ++i) {
+            res[i] = t[i];
+        }
+        return res;
+    }
+
     private double[][] Y;
+    private double[] t;
+    private double x1;
+    private double x2;
+
 
     static double[] sum(double[] A, double[] B) {
-        if (A.length != B.length) {
-            throw new IllegalArgumentException("SystemRungeKutta array sum: lengths" + A.length + " != " + B.length);
-        }
+        assert A.length == B.length;
         double[] res = new double[A.length];
         for (int i = 0; i < A.length; ++i) {
             res[i] = A[i] + B[i];
@@ -101,12 +118,27 @@ public class SystemRungeKutta {
         }
     }
 
-    static double calc_err(Function f, double t, double calc) {
+    public static double calc_err(Function f, double t, double calc) {
         double actual = f.calculate(t);
         return abs(actual - calc);
     }
 
-    public SystemRungeKutta(ArrayList<Function> F, ArrayList<Double> inits, double x1, double x2, int N) {
+    public SystemRungeKutta(ArrayList<Function> functions, double[] inits, double x1, double x2, int n) {
+        F = functions;
+        N = n+1; // to ensure that the last point is calculated
+        t = new double[N];
+        t[0] = x1;
+        double dt = (x2-x1)/n;
+        this.x1 = x1;
+        this.x2 = x2;
+        Y = new double[N][F.size()];
+
+        for (int j = 0; j < F.size(); ++j) {
+            Y[0][j] = inits[j];
+        }
+        runge(F, t, Y, dt);
+    }
+
 //        f(x, y) = x * sqrt(y)
 //        f(t) = (((t^2.0) + 4.0) ^ 2) / 16.0
 //        int N = 100;
@@ -114,43 +146,15 @@ public class SystemRungeKutta {
 //        Y[0][0] = 1.0;
 //        double dt = 0.10;
 
-//        String[] raw_funcs = new String[] {
-//                "f1(x1, y1, z1) = z1",  // y(0) = 3; y'=z
-//                "g1(x, y, z) = 6*y-z"  // z(0) = 1; z'=6y-z
-//
-////            t[0] = 0.;
-////            Y[0][0] = 3.;
-////            Y[0][1] = 1.;
-////            int N = 10;
-////            double dt = 0.10;
-//        };
+//                "f1(x, y1, y2) = y2",  // y(0) = 3; y'=z
+//                "g1(x, y1, y2) = 6*y1-y2"  // z(0) = 1; z'=6y-z
+
+//            t[0] = 0.;
+//            Y[0][0] = 3.;
+//            Y[0][1] = 1.;
+//            int N = 10;
+//            double dt = 0.10;
         //        Function real = new Function("f(t) = (((t^2.0) + 4.0) ^ 2) / 16.0");
 //        Function real = new Function("f(x) = e^(-3*x)+2*e^(2*x)");
-//        System.out.println(real.calculate(1.));
 
-        t = new double[N];
-        t[0] = x1;
-
-        Y = new double[N][F.size()];
-        for (int i = 0; i < F.size(); ++i) {
-            Y[0][i] = inits.get(i);
-        }
-
-//        t[0] = 0;
-//        Y[0][0] = 1.0;
-
-        double dt = (x2-x1)/N;
-
-
-        runge(F, t, Y, dt);
-//        for (int i = 0; i < t.length; i++)
-//            if (i % 10 == 0)
-//                System.out.printf("y(%.1f) = %.8f Error: %.6f\n",
-//                        t[i], Y[i][0],
-//                        calc_err(real, t[i], Y[i][0]));
-
-        //TODO: проверить! Почему z9 не сходится!
-        System.out.println(Y[10][0]);
-        System.out.println(t[10]);
-    }
 }
