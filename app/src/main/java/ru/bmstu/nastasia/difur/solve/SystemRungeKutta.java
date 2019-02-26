@@ -1,4 +1,4 @@
-package ru.bmstu.nastasia;
+package ru.bmstu.nastasia.difur.solve;
 
 import org.mariuszgromada.math.mxparser.*;
 
@@ -25,13 +25,25 @@ public class SystemRungeKutta {
     private ArrayList<Function> F;
     private int N;
 
-    public Double[][] getY() {
+    public Double[][] getYNotTransposed() {
         int n = Y.length;
         int m = Y[0].length;
         Double[][] res = new Double[n][m];
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
                 res[i][j] = Y[i][j];
+            }
+        }
+        return res;
+    }
+
+    public Double[][] getY() {
+        int n = Y.length;
+        int m = Y[0].length;
+        Double[][] res = new Double[m][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                res[j][i] = Y[i][j];  // transposition to get Y[funcs][poins] from Y[points][funcs]
             }
         }
         return res;
