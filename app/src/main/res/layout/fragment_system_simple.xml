@@ -18,7 +18,8 @@
             <android.support.v7.widget.CardView
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     card_view:cardBackgroundColor="@color/ap_white"
                     card_view:cardCornerRadius="2dp"
                     card_view:cardElevation="2dp"
@@ -35,15 +36,17 @@
             <android.support.v7.widget.CardView
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     card_view:cardBackgroundColor="@color/ap_white"
                     card_view:cardCornerRadius="2dp"
                     card_view:cardElevation="2dp"
+                    android:layout_weight="1"
                     style="@style/DifurCardViewStyle">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                               android:orientation="vertical">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                                  android:orientation="horizontal">
+                                  android:orientation="horizontal"
+                                  android:layout_weight="0">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                   android:text="@string/x_from"/>
                         <EditText android:id="@+id/system_et_x1"
@@ -61,6 +64,7 @@
                     <android.support.v7.widget.RecyclerView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:id="@+id/system_inits_rv"
                             android:scrollbars="vertical"/>
 
@@ -72,7 +76,8 @@
 
             <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:id="@+id/system_solve_button"
-                    android:text="@string/solve"/>
+                    android:text="@string/solve"
+                    android:layout_weight="0"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

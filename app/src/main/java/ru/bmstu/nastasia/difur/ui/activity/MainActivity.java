@@ -14,6 +14,7 @@ import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.ui.fragment.I_simple;
+import ru.bmstu.nastasia.difur.ui.fragment.System_simple;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Toolbar toolbar;
-    private int navigationSelectedItem = 0;
+    private int navigationSelectedItem = 1;
     private I_simple fragment_i_simple;
+    private System_simple fragment_system_simple;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFragments() {
         fragment_i_simple = new I_simple();
+        fragment_system_simple = new System_simple();
     }
 
     private void initDrawer() {
@@ -180,6 +183,12 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_activity_container, fragment_i_simple)
+                        .addToBackStack("MY_PROFILE")
+                        .commit();
+                break;
+            case 1:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_activity_container, fragment_system_simple)
                         .addToBackStack("MY_PROFILE")
                         .commit();
                 break;

@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.solve.SystemRungeKutta;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,12 @@ public class System_simple extends Fragment {
     private Button button_solve;
     private Button button_ok;
     private EditText row_number_et;
+    private EditText x1_et;
+    private EditText x2_et;
     private RecyclerView rows_rv;
+    private RecyclerView inits_rv;
     private FunctionAdapter function_adapter;
+    private InitsAdapter inits_adapter;
     private int rows_number;
     private Context context;
 
@@ -44,12 +49,21 @@ public class System_simple extends Fragment {
 
     private void initFields(View view) {
         context = getContext();
+
+        x1_et = view.findViewById(R.id.system_et_x1);
+        x2_et = view.findViewById(R.id.system_et_x2);
         row_number_et = view.findViewById(R.id.system_row_number_et);
         rows_number = 2;  // default
         function_adapter = new FunctionAdapter(rows_number);
         rows_rv = view.findViewById(R.id.system_simple_rv);
         rows_rv.setAdapter(function_adapter);
         rows_rv.setLayoutManager(new LinearLayoutManager(this.context));
+
+
+        inits_adapter = new InitsAdapter(rows_number);
+        inits_rv = view.findViewById(R.id.system_inits_rv);
+        inits_rv.setAdapter(inits_adapter);
+        inits_rv.setLayoutManager(new LinearLayoutManager(this.context));
 
         button_ok = view.findViewById(R.id.system_ok_button);
         button_ok.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +72,8 @@ public class System_simple extends Fragment {
                 updateRowsNumber();
                 function_adapter.update(rows_number);
                 function_adapter.notifyDataSetChanged();
+                inits_adapter.update(rows_number);
+                inits_adapter.notifyDataSetChanged();
 
             }
         });
@@ -66,7 +82,10 @@ public class System_simple extends Fragment {
         button_solve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkFunctions();
+                if (!checkFunctions()) {
+                    Toast.makeText(context, R.string.warning_incorrect, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 ArrayList<FunctionInputListener> listeners = function_adapter.getInputListeners();
                 boolean is_ok = true;
                 ArrayList<Function> functions = new ArrayList<>(listeners.size());
@@ -77,15 +96,25 @@ public class System_simple extends Fragment {
                         functions.add(listener.getFunction());
                     }
                 }
+                ArrayList<Double> inits = inits_adapter.getValues();
+                double x1 = Double.parseDouble(x1_et.getText().toString());
+                double x2 = Double.parseDouble(x2_et.getText().toString());
+                SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 100);
                 if (!is_ok) {
                     Toast.makeText(context, R.string.warning_incorrect, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 StringBuilder sb = new StringBuilder();
                 for (Function f: functions) {
-                    sb.append(f.toString() + "\n");
+                    sb.append(f.getFunctionExpressionString()).append('\n');
                 }
                 Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+                sb = new StringBuilder();
+                for (Function f: functions) {
+                    sb.append(inits).append('\n');
+                }
+                Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -107,7 +136,9 @@ public class System_simple extends Fragment {
         for (int i = 0; i < rows_number; ++i) {
             res &= ((FunctionAdapter.InputHolder)rows_rv.findViewHolderForAdapterPosition(i)).checkInput();
         }
-        Toast.makeText(context, ""+res, Toast.LENGTH_SHORT).show();
+        res &= inits_adapter.checkInput();
+        res &= !x1_et.getText().toString().isEmpty();
+        res &= !x2_et.getText().toString().isEmpty();
         return res;
     }
 

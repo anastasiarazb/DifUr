@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:orientation="horizontal">
+
+    <TextView android:id="@+id/adapter_tv_initials"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="y_1' = "/>
+    <EditText android:id="@+id/adapter_et_initials"
+              android:inputType="number"
+              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:ems="3" android:gravity="center"
+              android:text="0"/>
+
+</LinearLayout>
