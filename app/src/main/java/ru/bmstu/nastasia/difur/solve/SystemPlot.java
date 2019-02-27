@@ -33,14 +33,24 @@ public class SystemPlot extends AppCompatActivity {
     private Double[][] y;
     private Double[] x;
 
+    private static final Integer[] colors = {
+            Color.GREEN,
+            Color.RED,
+            Color.BLUE,
+            Color.GRAY,
+            Color.MAGENTA,
+            Color.YELLOW,
+            Color.CYAN
+    };
+
     private MathView tex_equation;
     private MathView tex_user_solution;
 
-    void addSeries(Double[] y, @Nullable String label, int formatter) {
-        XYSeries series = new SimpleXYSeries(
-                Arrays.asList(y), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, label);
+    void addSeries(Double[] x, Double[] y, @Nullable String label, Integer color) {
+        XYSeries series = new SimpleXYSeries(Arrays.asList(x), Arrays.asList(y), label);
         LineAndPointFormatter seriesFormat =
-                new LineAndPointFormatter(this, formatter);
+                new LineAndPointFormatter(color, Color.DKGRAY, Color.BLUE, null);
+        seriesFormat.configure(this, R.xml.line_point_formatter_no_color);
         Log.i("SystemPlot.ADD_SERIES", Arrays2Strings.arr1DtoString(y) + label);
         seriesFormat.setPointLabelFormatter(null);
         // (optional) add some smoothing to the lines: http://androidplot.com/smooth-curves-and-androidplot/
@@ -85,13 +95,13 @@ public class SystemPlot extends AppCompatActivity {
         // create formatters to use for drawing a series using LineAndPointRenderer and configure them from xml:
         PixelUtils.init(getBaseContext());
 
-        addSeries(y[0], "1", R.xml.line_point_formatter_with_labels);
+//        addSeries(y[1], "1", R.xml.line_point_formatter_with_labels);
 
-//        for (int i = 0; i < y.length; ++i) {
-//            String name = "y" + (i+1);
-//
-//            addSeries(y[i], name, R.xml.line_point_formatter_with_labels);
-//        }
+        for (int i = 0; i < y.length; ++i) {
+            String name = "y" + (i+1);
+
+            addSeries(x, y[i], name, colors[i % colors.length]);
+        }
 
         plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
         plot.getGraph().getDomainGridLinePaint().setColor(Color.TRANSPARENT);

@@ -35,9 +35,9 @@ public class Plot extends AppCompatActivity {
     private MathView tex_equation;
     private MathView tex_user_solution;
 
-    void addSeries(Double[] y, @Nullable String label, int formatter) {
+    void addSeries(Double[] x, Double[] y, @Nullable String label, int formatter) {
         XYSeries series = new SimpleXYSeries(
-                Arrays.asList(y), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, label);
+                Arrays.asList(x), Arrays.asList(y), label);
         LineAndPointFormatter seriesFormat =
                 new LineAndPointFormatter(this, formatter);
         seriesFormat.setPointLabelFormatter(null);
@@ -96,10 +96,10 @@ public class Plot extends AppCompatActivity {
         // create formatters to use for drawing a series using LineAndPointRenderer and configure them from xml:
         PixelUtils.init(getBaseContext());
 
-        addSeries(y, getBaseContext().getString(R.string.plot_series_solution), R.xml.line_point_formatter_with_labels);
+        addSeries(x, y, getBaseContext().getString(R.string.plot_series_solution), R.xml.line_point_formatter_with_labels);
 
         if (b.containsKey(ParamNames.y2)) {
-            addSeries((Double[])b.get(ParamNames.y2), getBaseContext().getString(R.string.plot_series_user_solution),
+            addSeries(x, (Double[])b.get(ParamNames.y2), getBaseContext().getString(R.string.plot_series_user_solution),
                     R.xml.line_point_formatter_with_labels_2);
         }
         plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
