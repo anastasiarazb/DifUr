@@ -37,7 +37,7 @@ public class Plot extends AppCompatActivity {
 
     void addSeries(Double[] y, @Nullable String label, int formatter) {
         XYSeries series = new SimpleXYSeries(
-                Arrays.asList(y), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, getBaseContext().getString(R.string.plot_series_solution));
+                Arrays.asList(y), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, label);
         LineAndPointFormatter seriesFormat =
                 new LineAndPointFormatter(this, formatter);
         seriesFormat.setPointLabelFormatter(null);

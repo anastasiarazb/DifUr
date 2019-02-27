@@ -15,8 +15,8 @@
     <!--fragment_du_1_simple.xml-->
     <string name="warning_fill_all">Не все поля заполнены</string>
     <string name="warning_incorrect">Некорректный ввод</string>
-    <string name="plot_series_solution">Численное решение</string>
-    <string name="plot_series_user_solution">Пользовательское решение</string>
+    <string name="plot_series_solution">Y_num</string>
+    <string name="plot_series_user_solution">Y_user</string>
     <string name="solve">Решить</string>
     <string name="x_from">x от</string>
     <string name="x_to">х до</string>
@@ -45,5 +45,8 @@
     <string-array name="types_n">
         <item>Уравнения произвольного вида</item>
         <item>Уравнения с постоянными коэффициентами</item>
+    </string-array>
+    <string-array name="types_system">
+        <item>Системы уравнений I порядка</item>
     </string-array>
 </resources>
