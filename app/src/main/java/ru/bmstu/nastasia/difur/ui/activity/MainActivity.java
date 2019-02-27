@@ -1,11 +1,9 @@
 package ru.bmstu.nastasia.difur.ui.activity;
 
-import android.content.Intent;
-import android.support.design.widget.BottomSheetBehavior;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 import com.mikepenz.materialdrawer.Drawer;
@@ -27,10 +25,21 @@ public class MainActivity extends AppCompatActivity {
         public static final String ANSWER_KEY  = "string";
     }
 
+    class Names {
+        String I_SIMPLE;
+        String SYSTEM_SIMPLE;
+
+        Names(Resources resources) {
+            I_SIMPLE = resources.getStringArray(R.array.types_1)[0];
+            SYSTEM_SIMPLE = resources.getStringArray(R.array.types_system)[0];
+        }
+    }
+
     private Toolbar toolbar;
     private int navigationSelectedItem = 1;
     private I_simple fragment_i_simple;
     private System_simple fragment_system_simple;
+    private Names names;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        names = new Names(getResources());
 
 //        LinearLayout llBottomSheet = (LinearLayout) findViewById(R.id.bottom_sheet);
 //        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
@@ -79,17 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDrawer() {
-        ProfileDrawerItem mProfileDrawerItem = new ProfileDrawerItem();
-
-        PrimaryDrawerItem myProfile = new PrimaryDrawerItem()
-                .withIdentifier(0)
-                .withName("string1")
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        return false;
-                    }
-                });
 
 //        PrimaryDrawerItem users = new PrimaryDrawerItem()
 //                .withIdentifier(1)
@@ -139,6 +138,32 @@ public class MainActivity extends AppCompatActivity {
 //                    return false;
 //                });
 
+        PrimaryDrawerItem i_simple = new PrimaryDrawerItem()
+                .withIdentifier(0)
+                .withName(names.I_SIMPLE)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        toolbar.setTitle(names.I_SIMPLE);
+                        navigationSelectedItem = 0;
+                        openFragment();
+                        return false;
+                    }
+                });
+
+        PrimaryDrawerItem system_simple = new PrimaryDrawerItem()
+                .withIdentifier(1)
+                .withName(names.SYSTEM_SIMPLE)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        toolbar.setTitle(names.SYSTEM_SIMPLE);
+                        navigationSelectedItem = 1;
+                        openFragment();
+                        return false;
+                    }
+                });
+
         new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -146,16 +171,22 @@ public class MainActivity extends AppCompatActivity {
                 .withHeader(R.layout.drawer_header)
                 .addDrawerItems(
                         new SectionDrawerItem().withName("Уравнения первого порядка"),
-                        new PrimaryDrawerItem().withName("ДУ с разделяющимися \nпеременными").withIdentifier(1),
-                        new PrimaryDrawerItem().withName("ДУ с постоянными коэффициентами"),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withBadge("6").withIdentifier(2),
-//                        new SectionDrawerItem().withName(R.string.drawer_item_settings),
-                        new SectionDrawerItem().withName("Уравнения второго порядка"),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_help),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withBadge("12+").withIdentifier(1)
+                        i_simple,
+                        new SectionDrawerItem().withName("Системы уравнений"),
+                        system_simple
+//                        new SectionDrawerItem().withName("Уравнения первого порядка"),
+//                        new PrimaryDrawerItem().withName("ДУ с разделяющимися \nпеременными")
+//                                .withIdentifier(1),
+//                        new PrimaryDrawerItem().withName("ДУ с постоянными коэффициентами"),
+//                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withBadge("6").withIdentifier(2),
+////                        new SectionDrawerItem().withName(R.string.drawer_item_settings),
+//                        new SectionDrawerItem().withName("Уравнения второго порядка"),
+//                        new PrimaryDrawerItem().withName(R.string.drawer_item_help),
+//                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source),
+//                        new DividerDrawerItem(),
+//                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withBadge("12+").withIdentifier(1)
                 )
+                .withSelectedItem(navigationSelectedItem)
                 .build();
 
 //        final Drawer drawerResult = new DrawerBuilder()
@@ -183,13 +214,13 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_activity_container, fragment_i_simple)
-                        .addToBackStack("MY_PROFILE")
+                        .addToBackStack(getResources().getStringArray(R.array.types_1)[0])
                         .commit();
                 break;
             case 1:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_activity_container, fragment_system_simple)
-                        .addToBackStack("MY_PROFILE")
+                        .addToBackStack(getResources().getStringArray(R.array.types_system)[0])
                         .commit();
                 break;
             default:
