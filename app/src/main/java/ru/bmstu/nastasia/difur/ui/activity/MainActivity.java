@@ -214,13 +214,13 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_activity_container, fragment_i_simple)
-                        .addToBackStack(getResources().getStringArray(R.array.types_1)[0])
+                        .addToBackStack(names.I_SIMPLE)
                         .commit();
                 break;
             case 1:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_activity_container, fragment_system_simple)
-                        .addToBackStack(getResources().getStringArray(R.array.types_system)[0])
+                        .addToBackStack(names.SYSTEM_SIMPLE)
                         .commit();
                 break;
             default:
