@@ -57,9 +57,9 @@
                 style="@style/DifurCardViewStyle">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:orientation="vertical"
-                          android:padding="15dp">
+                          >
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                              android:orientation="horizontal"
+                              android:orientation="horizontal" android:padding="15dp"
                 >
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                               android:text="@string/x_from"/>
