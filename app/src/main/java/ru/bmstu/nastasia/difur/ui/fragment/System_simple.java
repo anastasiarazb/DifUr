@@ -54,7 +54,7 @@ public class System_simple extends Fragment {
     private void initFields(View view) {
         context = getContext();
 
-        EquationSystem default_data = EquationSystem.TEST1;
+        EquationSystem default_data = EquationSystem.TEST2;
 
         x1_et = view.findViewById(R.id.system_et_x1);
         x1_et.setText(String.valueOf(default_data.x1));
@@ -123,7 +123,7 @@ public class System_simple extends Fragment {
                 }
                 Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
 
-                SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 10);
+                SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 100);
                 Intent childActivityIntent = new Intent(getActivity(),
                         ru.bmstu.nastasia.difur.solve.SystemPlot.class)
                         .putExtra(SystemPlot.ParamNames.x, solver.getX())
