@@ -2,6 +2,7 @@ package ru.bmstu.nastasia.difur.ui.fragment;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,19 +18,21 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
     private int size;
 
     private ArrayList<String>   src;
-    private ArrayList<FunctionInputListener> input_listeners;
+    private ArrayList<InputHolder> input_holders;
+    private String[] default_functions;
 
-    public FunctionAdapter(int size) {
-        update(size);
+    public FunctionAdapter(int size, @Nullable String[] default_functions) {
+        update(size, default_functions);
     }
 
-    public void update(int size) {
+    public void update(int size, @Nullable String[] default_functions) {
         this.size = size;
+        this.default_functions = default_functions;
         src  = new ArrayList<>(size);
-        input_listeners = new ArrayList<>(size);
+        input_holders = new ArrayList<>(size);
         for (int i = 1; i <= size; ++i) {
             src.add("y" + i + "' = ");
-            input_listeners.add(null);
+            input_holders.add(null);
         }
 
     }
@@ -45,11 +48,11 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         private FunctionInputListener listener;
 
 
-        InputHolder(View itemView) {
+        InputHolder(View itemView, int n) {
             super(itemView);
             func_name = itemView.findViewById(R.id.adapter_text_view);
             input_func = itemView.findViewById(R.id.adapter_input_fxy);
-            listener = new FunctionInputListener(itemView.getContext(), input_func, "f_i(x, y)");
+            listener = new FunctionInputListener(itemView.getContext(), input_func, n);
             input_func.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -71,9 +74,21 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         public void setTitle(String text) {
             func_name.setText(text);
         }
+
+        public void setValue(String text) {
+            input_func.setText(text);
+        }
+
+        public boolean isEmpty() {
+            return input_func.getText() == null || input_func.getText().toString().isEmpty();
+        }
     }
 
     public ArrayList<FunctionInputListener> getInputListeners() {
+        ArrayList<FunctionInputListener> input_listeners = new ArrayList<>(size);
+        for (InputHolder holder: input_holders) {
+            input_listeners.add(holder.getListener());
+        }
         return input_listeners;
     }
 
@@ -86,7 +101,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForInputItem, parent, shouldAttachToParentImmediately);
-        FunctionAdapter.InputHolder viewHolder = new FunctionAdapter.InputHolder(view);
+        FunctionAdapter.InputHolder viewHolder = new FunctionAdapter.InputHolder(view, size);
 
         return viewHolder;
     }
@@ -94,7 +109,13 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
     @Override
     public void onBindViewHolder(@NonNull InputHolder holder, int position) {
         holder.setTitle(src.get(position));
-        input_listeners.set(position, holder.getListener());
+        if (holder.isEmpty() && default_functions != null && default_functions.length > 0) {
+            int n = default_functions.length <= position
+                    ? default_functions.length : position;
+            holder.setValue(default_functions[n]);
+            Log.i("FuncAd.onBindViewHolder", position + ' ' + default_functions[n]);
+        }
+        input_holders.set(position, holder);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ru.bmstu.nastasia.difur.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.solve.SystemRungeKutta;
+import ru.bmstu.nastasia.difur.solve.SystemPlot;
+import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
+import ru.bmstu.nastasia.difur.examples.*;
 
 import java.util.ArrayList;
 
@@ -50,17 +54,22 @@ public class System_simple extends Fragment {
     private void initFields(View view) {
         context = getContext();
 
+        EquationSystem default_data = EquationSystem.TEST1;
+
         x1_et = view.findViewById(R.id.system_et_x1);
+        x1_et.setText(String.valueOf(default_data.x1));
         x2_et = view.findViewById(R.id.system_et_x2);
+        x2_et.setText(String.valueOf(default_data.x2));
         row_number_et = view.findViewById(R.id.system_row_number_et);
         rows_number = 2;  // default
-        function_adapter = new FunctionAdapter(rows_number);
+
+        function_adapter = new FunctionAdapter(rows_number, default_data.func_raws);
         rows_rv = view.findViewById(R.id.system_simple_rv);
         rows_rv.setAdapter(function_adapter);
         rows_rv.setLayoutManager(new LinearLayoutManager(this.context));
 
 
-        inits_adapter = new InitsAdapter(rows_number);
+        inits_adapter = new InitsAdapter(rows_number, default_data.inits);
         inits_rv = view.findViewById(R.id.system_inits_rv);
         inits_rv.setAdapter(inits_adapter);
         inits_rv.setLayoutManager(new LinearLayoutManager(this.context));
@@ -70,9 +79,9 @@ public class System_simple extends Fragment {
             @Override
             public void onClick(View view) {
                 updateRowsNumber();
-                function_adapter.update(rows_number);
+                function_adapter.update(rows_number, null);
                 function_adapter.notifyDataSetChanged();
-                inits_adapter.update(rows_number);
+                inits_adapter.update(rows_number, null);
                 inits_adapter.notifyDataSetChanged();
 
             }
@@ -96,10 +105,9 @@ public class System_simple extends Fragment {
                         functions.add(listener.getFunction());
                     }
                 }
-                ArrayList<Double> inits = inits_adapter.getValues();
+                double[] inits = inits_adapter.getValues();
                 double x1 = Double.parseDouble(x1_et.getText().toString());
                 double x2 = Double.parseDouble(x2_et.getText().toString());
-                SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 100);
                 if (!is_ok) {
                     Toast.makeText(context, R.string.warning_incorrect, Toast.LENGTH_SHORT).show();
                     return;
@@ -110,10 +118,20 @@ public class System_simple extends Fragment {
                 }
                 Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
                 sb = new StringBuilder();
-                for (Function f: functions) {
-                    sb.append(inits).append('\n');
+                for (double d: inits) {
+                    sb.append(d).append('\n');
                 }
                 Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+
+                SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 10);
+                Intent childActivityIntent = new Intent(getActivity(),
+                        ru.bmstu.nastasia.difur.solve.SystemPlot.class)
+                        .putExtra(SystemPlot.ParamNames.x, solver.getX())
+                        .putExtra(SystemPlot.ParamNames.y, solver.getY());
+
+                if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivityForResult(childActivityIntent, MainActivity.Requests.REQUEST_CODE);
+                }
 
 
             }

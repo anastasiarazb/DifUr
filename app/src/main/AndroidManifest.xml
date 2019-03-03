@@ -56,6 +56,13 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".solve.SolveHello"/>
         </activity>
+        <activity android:name=".solve.SystemPlot">
+            android:label="График решения"
+            android:theme="@style/AppTheme">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".solve.SolveHello"/>
+        </activity>
     </application>
 
 </manifest>
