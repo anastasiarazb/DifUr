@@ -15,7 +15,10 @@
             xmlns:tools="http://schemas.android.com/tools"
             tools:replace="android:hardwareAccelerated"
             android:hardwareAccelerated="true">
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name=".ui.activity.MainActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme"
+                  android:label="Дифференциальные уравнения">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -25,7 +28,8 @@
         <activity
                 android:name=".solve.TypeChooser"
                 android:label="Тип"
-                android:theme="@style/AppTheme">
+                android:theme="@style/AppTheme"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="ui.activity.MainActivity"/>
@@ -33,32 +37,37 @@
         <activity
                 android:name=".theory.HelloPage"
                 android:label="@string/theory_hello"
-                android:theme="@style/AppTheme">
+                android:theme="@style/AppTheme"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.activity.MainActivity"/>
         </activity>
         <activity android:name=".theory.Th1">
             android:label="Теория 1"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".solve.SolveHello">
             android:label="Решить задачу"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.activity.MainActivity"/>
         </activity>
         <activity android:name=".solve.Plot">
             android:label="График решения"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".solve.SolveHello"/>
         </activity>
         <activity android:name=".solve.SystemPlot">
             android:label="График решения"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".solve.SolveHello"/>
