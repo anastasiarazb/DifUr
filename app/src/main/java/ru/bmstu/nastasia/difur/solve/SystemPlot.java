@@ -35,7 +35,6 @@ public class SystemPlot extends AppCompatActivity {
 
     private static final Integer[] colors = {
             Color.GREEN,
-            Color.RED,
             Color.BLUE,
             Color.GRAY,
             Color.MAGENTA,
