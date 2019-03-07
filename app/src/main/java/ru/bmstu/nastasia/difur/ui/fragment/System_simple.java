@@ -113,15 +113,15 @@ public class System_simple extends Fragment {
                     return;
                 }
                 StringBuilder sb = new StringBuilder();
-                for (Function f: functions) {
-                    sb.append(f.getFunctionExpressionString()).append('\n');
-                }
-                Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
-                sb = new StringBuilder();
-                for (double d: inits) {
-                    sb.append(d).append('\n');
-                }
-                Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+//                for (Function f: functions) {
+//                    sb.append(f.getFunctionExpressionString()).append('\n');
+//                }
+//                Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+//                sb = new StringBuilder();
+//                for (double d: inits) {
+//                    sb.append(d).append('\n');
+//                }
+//                Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
 
                 SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 100);
                 Intent childActivityIntent = new Intent(getActivity(),
