@@ -229,4 +229,21 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+    }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        openFragment();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        openFragment();
+//    }
 }
