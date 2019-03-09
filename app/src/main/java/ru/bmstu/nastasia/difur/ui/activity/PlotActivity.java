@@ -1,4 +1,4 @@
-package ru.bmstu.nastasia.difur.solve;
+package ru.bmstu.nastasia.difur.ui.activity;
 
 
 import android.graphics.Color;
@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
 
-public class Plot extends AppCompatActivity {
+public class PlotActivity extends AppCompatActivity {
 
     public static class ParamNames {
         final public static String y = "y array";
@@ -60,7 +60,7 @@ public class Plot extends AppCompatActivity {
         Bundle b = this.getIntent().getExtras();
 
         if (b == null || !b.containsKey(ParamNames.x) || ! b.containsKey(ParamNames.y)) {
-            throw new Error("solve.Plot: Not x or y array are found");
+            throw new Error("solve.PlotActivity: Not x or y array are found");
         }
 
         if (b.containsKey(ParamNames.equation)) {

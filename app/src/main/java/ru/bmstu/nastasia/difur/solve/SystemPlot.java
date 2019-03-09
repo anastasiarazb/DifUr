@@ -42,9 +42,6 @@ public class SystemPlot extends AppCompatActivity {
             Color.CYAN
     };
 
-    private MathView tex_equation;
-    private MathView tex_user_solution;
-
     void addSeries(Double[] x, Double[] y, @Nullable String label, Integer color) {
         XYSeries series = new SimpleXYSeries(Arrays.asList(x), Arrays.asList(y), label);
         LineAndPointFormatter seriesFormat =
@@ -68,7 +65,7 @@ public class SystemPlot extends AppCompatActivity {
         Bundle b = this.getIntent().getExtras();
 
         if (b == null || !b.containsKey(ParamNames.x) || ! b.containsKey(ParamNames.y)) {
-            throw new Error("solve.Plot: Not x or y array are found");
+            throw new Error("solve.PlotActivity: Not x or y array are found");
         }
 
         x = (Double[])b.get(ParamNames.x);

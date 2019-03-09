@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import ru.bmstu.nastasia.difur.R;
-import ru.bmstu.nastasia.difur.solve.Plot;
+import ru.bmstu.nastasia.difur.ui.activity.PlotActivity;
 import ru.bmstu.nastasia.difur.solve.RungeKutta;
 import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
 
@@ -94,10 +94,10 @@ public class I_simple extends Fragment {
 
                 RungeKutta solver = new RungeKutta(fxy, y1, y2, x2);
                 Intent childActivityIntent = new Intent(getActivity(),
-                        ru.bmstu.nastasia.difur.solve.Plot.class)
-                        .putExtra(Plot.ParamNames.x, solver.getX())
-                        .putExtra(Plot.ParamNames.y, solver.getY())
-                        .putExtra(Plot.ParamNames.equation, input_fxy.getEditableText().toString());
+                        PlotActivity.class)
+                        .putExtra(PlotActivity.ParamNames.x, solver.getX())
+                        .putExtra(PlotActivity.ParamNames.y, solver.getY())
+                        .putExtra(PlotActivity.ParamNames.equation, input_fxy.getEditableText().toString());
 
                 if (input_solution_cb.isChecked()
                         && (listener_solution.checkVal() != null)) {
@@ -109,8 +109,8 @@ public class I_simple extends Fragment {
                         y[i] = solution.calculate(x[i]);
                     }
                     childActivityIntent
-                            .putExtra(Plot.ParamNames.y2, y)
-                            .putExtra(Plot.ParamNames.user_solution, input_solution.getEditableText().toString());
+                            .putExtra(PlotActivity.ParamNames.y2, y)
+                            .putExtra(PlotActivity.ParamNames.user_solution, input_solution.getEditableText().toString());
                 }
 
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
