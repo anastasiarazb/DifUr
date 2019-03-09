@@ -1,61 +1,21 @@
 package ru.bmstu.nastasia.difur.ui.activity;
 
-
-import android.graphics.Color;
-import android.support.annotation.Nullable;
-
-import android.util.Log;
-import com.androidplot.ui.HorizontalPositioning;
-import com.androidplot.ui.VerticalPositioning;
-import com.androidplot.util.PixelUtils;
-import com.androidplot.xy.*;
-
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.Arrays;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import ru.bmstu.nastasia.difur.R;
-import ru.bmstu.nastasia.difur.common.Arrays2Strings;
 import ru.bmstu.nastasia.difur.common.PlotDataContainer;
+import ru.bmstu.nastasia.difur.common.PlotDataContainer.ParamNames;
+import ru.bmstu.nastasia.difur.ui.adapters.PlotAdapter;
 
 public class SystemPlotActivity extends AppCompatActivity {
 
-    public static class ParamNames {
-        final public static String y = "y array";
-        final public static String x = "x array";
-        final public static String y2 = "y2 array";
-        final public static String equation = "equation";
-        final public static String user_solution = "user solution";
-    }
+    private RecyclerView recyclerView;
+    private PlotAdapter  adapter;
 
-    private XYPlot plot;
-
-//    private Double[][] y;
-//    private Double[] x;
-
-    private static final Integer[] colors = {
-            Color.GREEN,
-            Color.BLUE,
-            Color.GRAY,
-            Color.MAGENTA,
-            Color.YELLOW,
-            Color.CYAN
-    };
-
-    void addSeries(Double[] x, Double[] y, @Nullable String label, Integer color) {
-        XYSeries series = new SimpleXYSeries(Arrays.asList(x), Arrays.asList(y), label);
-        LineAndPointFormatter seriesFormat =
-                new LineAndPointFormatter(color, Color.DKGRAY, Color.BLUE, null);
-        seriesFormat.configure(this, R.xml.line_point_formatter_no_color);
-        Log.i("SystemPlotAct.addSeries", Arrays2Strings.arr1DtoString(y) + label);
-        seriesFormat.setPointLabelFormatter(null);
-        // (optional) add some smoothing to the lines: http://androidplot.com/smooth-curves-and-androidplot/
-        seriesFormat.setInterpolationParams(
-                new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
-        plot.addSeries(series, seriesFormat);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,31 +31,11 @@ public class SystemPlotActivity extends AppCompatActivity {
 
         ArrayList<PlotDataContainer> data = PlotDataContainer.genArray(b);
 
-
-//        x = (Double[])b.get(ParamNames.x);
-//        y = (Double[][])b.get(ParamNames.y);
-        plot = (XYPlot)findViewById(R.id.system_XYPlot);
-
-        // create formatters to use for drawing a series using LineAndPointRenderer and configure them from xml:
-        PixelUtils.init(getBaseContext());
-
-//        addSeries(y[1], "1", R.xml.line_point_formatter_with_labels);
-
-        Double[] x = data.get(0).getX();
-
-        for (int i = 0; i < data.size(); ++i) {
-            String name = "y" + (i+1);
-
-            addSeries(data.get(i).getX(), data.get(i).getY(), name, colors[i % colors.length]);
-        }
-
-        plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
-        plot.getGraph().getDomainGridLinePaint().setColor(Color.TRANSPARENT);
-        plot.getGraph().getDomainSubGridLinePaint().setColor(Color.TRANSPARENT);
-        plot.getGraph().getGridBackgroundPaint().setColor(Color.WHITE);
-        plot.getGraph().position(
-                0, HorizontalPositioning.ABSOLUTE_FROM_LEFT,
-                0, VerticalPositioning.ABSOLUTE_FROM_TOP);
+        adapter = new PlotAdapter(data);
+        recyclerView = findViewById(R.id.system_plots_rv);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.notifyDataSetChanged();
     }
 
     @Override
