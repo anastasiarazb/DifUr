@@ -10,12 +10,14 @@ import com.androidplot.ui.VerticalPositioning;
 import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.common.Arrays2Strings;
+import ru.bmstu.nastasia.difur.common.PlotDataContainer;
 
 public class SystemPlotActivity extends AppCompatActivity {
 
@@ -29,8 +31,8 @@ public class SystemPlotActivity extends AppCompatActivity {
 
     private XYPlot plot;
 
-    private Double[][] y;
-    private Double[] x;
+//    private Double[][] y;
+//    private Double[] x;
 
     private static final Integer[] colors = {
             Color.GREEN,
@@ -67,35 +69,24 @@ public class SystemPlotActivity extends AppCompatActivity {
             throw new Error("solve.PlotActivity: Not x or y array are found");
         }
 
-        x = (Double[])b.get(ParamNames.x);
-        y = (Double[][])b.get(ParamNames.y);
+        ArrayList<PlotDataContainer> data = PlotDataContainer.genArray(b);
+
+
+//        x = (Double[])b.get(ParamNames.x);
+//        y = (Double[][])b.get(ParamNames.y);
         plot = (XYPlot)findViewById(R.id.system_XYPlot);
-
-        // create a couple arrays of y-values to plot:
-//        Number[] domainLabels = x;
-        Number[][] series1Numbers = y;
-
-        Number[] domainLabels = new Number[x.length];
-
-        double precision = 100.;
-
-        for (int i = 0; i < x.length; ++i) {
-            domainLabels[i] = Math.round(x[i].floatValue() * precision) / precision;
-        }
-
-        // turn the above arrays into XYSeries': (Y_VALS_ONLY means use the element index as the x value)
-//        XYSeries series1 = new SimpleXYSeries(
-//                Arrays.asList(series1Numbers), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, getBaseContext().getString(R.string.plot_series_solution));
 
         // create formatters to use for drawing a series using LineAndPointRenderer and configure them from xml:
         PixelUtils.init(getBaseContext());
 
 //        addSeries(y[1], "1", R.xml.line_point_formatter_with_labels);
 
-        for (int i = 0; i < y.length; ++i) {
+        Double[] x = data.get(0).getX();
+
+        for (int i = 0; i < data.size(); ++i) {
             String name = "y" + (i+1);
 
-            addSeries(x, y[i], name, colors[i % colors.length]);
+            addSeries(data.get(i).getX(), data.get(i).getY(), name, colors[i % colors.length]);
         }
 
         plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);

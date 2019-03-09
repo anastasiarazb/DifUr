@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.EditText;
@@ -101,11 +102,14 @@ public class System_simple extends Fragment {
                 ArrayList<FunctionInputListener> listeners = function_adapter.getInputListeners();
                 boolean is_ok = true;
                 ArrayList<Function> functions = new ArrayList<>(listeners.size());
-                for (FunctionInputListener listener: listeners) {
+                String[] func_strings = new String[listeners.size()];
+                for (int i = 0; i < listeners.size(); ++i) {
+                    FunctionInputListener listener = listeners.get(i);
                     Boolean val = listener.checkVal();
                     if (val != null) {
                         is_ok &= val;
                         functions.add(listener.getFunction());
+                        func_strings[i] = listener.getFunctionString();
                     }
                 }
                 double[] inits = inits_adapter.getValues();
@@ -130,7 +134,8 @@ public class System_simple extends Fragment {
                 Intent childActivityIntent = new Intent(getActivity(),
                         SystemPlotActivity.class)
                         .putExtra(SystemPlotActivity.ParamNames.x, solver.getX())
-                        .putExtra(SystemPlotActivity.ParamNames.y, solver.getY());
+                        .putExtra(SystemPlotActivity.ParamNames.y, solver.getY())
+                        .putExtra(SystemPlotActivity.ParamNames.equation, func_strings);
 
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(childActivityIntent, MainActivity.Requests.REQUEST_CODE);
