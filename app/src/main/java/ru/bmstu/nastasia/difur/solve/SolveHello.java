@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.ui.activity.PlotActivity;
 
 public class SolveHello extends AppCompatActivity {
 
@@ -44,7 +45,7 @@ public class SolveHello extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent childActivityIntent = new Intent(ru.bmstu.nastasia.difur.solve.SolveHello.this,
-                        ru.bmstu.nastasia.difur.solve.Plot.class);
+                        PlotActivity.class);
                 if (childActivityIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(childActivityIntent, 0);
                 }
