@@ -74,6 +74,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
 
         public void setTitle(String text) {
             func_name.setText(text);
+            listener.setFuncName(text.replaceAll("=","").trim());
         }
 
         public void setValue(String text) {
