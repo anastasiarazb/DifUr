@@ -7,16 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.common.PlotDataContainer;
 
 import java.util.ArrayList;
 
 public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
 
-    public PlotAdapter(ArrayList<>)
+    private ArrayList<PlotDataContainer> data;
+
+    public PlotAdapter(@NonNull ArrayList<PlotDataContainer> data) {
+        this.data = data;
+    }
 
     class PlotHolder extends RecyclerView.ViewHolder {
         PlotHolder(View itemView) {
             super(itemView);
+        }
+
+        void setData(PlotDataContainer data) {
+
         }
 
 
@@ -48,6 +57,6 @@ public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
 
     @Override
     public int getItemCount() {
-        return size;
+        return data.size();
     }
 }
