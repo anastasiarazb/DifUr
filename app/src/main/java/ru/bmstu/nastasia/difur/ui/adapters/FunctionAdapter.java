@@ -1,4 +1,4 @@
-package ru.bmstu.nastasia.difur.ui.fragment;
+package ru.bmstu.nastasia.difur.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.ui.listeners.FunctionInputListener;
 
 import java.util.ArrayList;
 

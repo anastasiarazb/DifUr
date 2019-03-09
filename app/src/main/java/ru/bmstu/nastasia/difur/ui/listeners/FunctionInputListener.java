@@ -1,4 +1,4 @@
-package ru.bmstu.nastasia.difur.ui.fragment;
+package ru.bmstu.nastasia.difur.ui.listeners;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

@@ -18,6 +18,9 @@ import ru.bmstu.nastasia.difur.solve.SystemRungeKutta;
 import ru.bmstu.nastasia.difur.solve.SystemPlot;
 import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
 import ru.bmstu.nastasia.difur.examples.*;
+import ru.bmstu.nastasia.difur.ui.adapters.FunctionAdapter;
+import ru.bmstu.nastasia.difur.ui.adapters.InitsAdapter;
+import ru.bmstu.nastasia.difur.ui.listeners.FunctionInputListener;
 
 import java.util.ArrayList;
 
