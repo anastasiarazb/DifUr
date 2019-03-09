@@ -16,16 +16,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.common.PlotDataContainer.ParamNames;
 
 public class PlotActivity extends AppCompatActivity {
-
-    public static class ParamNames {
-        final public static String y = "y array";
-        final public static String x = "x array";
-        final public static String y2 = "y2 array";
-        final public static String equation = "equation";
-        final public static String user_solution = "user solution";
-    }
 
     private XYPlot plot;
 

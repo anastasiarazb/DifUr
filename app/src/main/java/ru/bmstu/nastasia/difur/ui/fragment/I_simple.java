@@ -21,6 +21,8 @@ import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
 import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.ui.listeners.FunctionInputListener;
 import ru.bmstu.nastasia.difur.ui.listeners.NumberInputListener;
+import ru.bmstu.nastasia.difur.common.PlotDataContainer.ParamNames;
+
 
 
 public class I_simple extends Fragment {
@@ -44,7 +46,6 @@ public class I_simple extends Fragment {
     private CheckBox input_solution_cb;
     private TextInputEditText input_solution;
     private CardView solution_cv;
-
 
 
     private Bundle bundle_inputs;
@@ -97,9 +98,9 @@ public class I_simple extends Fragment {
                 RungeKutta solver = new RungeKutta(fxy, y1, y2, x2);
                 Intent childActivityIntent = new Intent(getActivity(),
                         PlotActivity.class)
-                        .putExtra(PlotActivity.ParamNames.x, solver.getX())
-                        .putExtra(PlotActivity.ParamNames.y, solver.getY())
-                        .putExtra(PlotActivity.ParamNames.equation, input_fxy.getEditableText().toString());
+                        .putExtra(ParamNames.x, solver.getX())
+                        .putExtra(ParamNames.y, solver.getY())
+                        .putExtra(ParamNames.equation, input_fxy.getEditableText().toString());
 
                 if (input_solution_cb.isChecked()
                         && (listener_solution.checkVal() != null)) {
@@ -111,8 +112,8 @@ public class I_simple extends Fragment {
                         y[i] = solution.calculate(x[i]);
                     }
                     childActivityIntent
-                            .putExtra(PlotActivity.ParamNames.y2, y)
-                            .putExtra(PlotActivity.ParamNames.user_solution, input_solution.getEditableText().toString());
+                            .putExtra(ParamNames.y2, y)
+                            .putExtra(ParamNames.user_solution, input_solution.getEditableText().toString());
                 }
 
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
