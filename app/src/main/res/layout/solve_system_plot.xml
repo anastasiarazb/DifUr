@@ -9,27 +9,18 @@
             android:scrollbars="horizontal"
             tools:context=".solve.SystemPlot"
             android:layout_gravity="center">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-
-
-
-                <android.support.v7.widget.CardView android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    style="@style/DifurCardViewStyle"
-                                                    android:layout_gravity="center">
-
-                    <com.androidplot.xy.XYPlot
-                            style="@style/APDefacto.Light"
-                            android:id="@+id/system_XYPlot"
-                            android:layout_height="match_parent"
-                            android:layout_width="match_parent"
-                            android:layout_margin="15dp"
-                            android:minHeight="550dp"
-
-                    />
-
-                </android.support.v7.widget.CardView>
-
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/system_plots_rv"
+                android:scrollbars="vertical"
+                android:fillViewport="true">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 
 
 </ScrollView>
