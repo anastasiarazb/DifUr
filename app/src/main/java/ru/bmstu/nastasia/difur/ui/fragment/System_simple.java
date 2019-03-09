@@ -15,7 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.common.PlotDataContainer;
 import ru.bmstu.nastasia.difur.solve.SystemRungeKutta;
+import ru.bmstu.nastasia.difur.ui.activity.SystemOnePlotActivity;
 import ru.bmstu.nastasia.difur.ui.activity.SystemPlotActivity;
 import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
 import ru.bmstu.nastasia.difur.examples.*;
@@ -132,10 +134,11 @@ public class System_simple extends Fragment {
 
                 SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 100);
                 Intent childActivityIntent = new Intent(getActivity(),
-                        SystemPlotActivity.class)
-                        .putExtra(SystemPlotActivity.ParamNames.x, solver.getX())
-                        .putExtra(SystemPlotActivity.ParamNames.y, solver.getY())
-                        .putExtra(SystemPlotActivity.ParamNames.equation, func_strings);
+                        SystemOnePlotActivity.class)
+//                        SystemPlotActivity.class)
+                        .putExtra(PlotDataContainer.ParamNames.x, solver.getX())
+                        .putExtra(PlotDataContainer.ParamNames.y, solver.getY())
+                        .putExtra(PlotDataContainer.ParamNames.equation, func_strings);
 
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(childActivityIntent, MainActivity.Requests.REQUEST_CODE);
