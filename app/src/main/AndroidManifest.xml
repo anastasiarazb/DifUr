@@ -34,35 +34,13 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="ui.activity.MainActivity"/>
         </activity>
-        <activity
-                android:name=".theory.HelloPage"
-                android:label="@string/theory_hello"
-                android:theme="@style/AppTheme"
-                android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.activity.MainActivity"/>
-        </activity>
-        <activity android:name=".theory.Th1">
-            android:label="Теория 1"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".solve.SolveHello">
-            android:label="Решить задачу"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.activity.MainActivity"/>
-        </activity>
         <activity android:name=".ui.activity.PlotActivity">
             android:label="График решения"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".solve.SolveHello"/>
+                    android:value=".ui.activity.MainActivity"/>
         </activity>
         <activity android:name=".solve.SystemPlot">
             android:label="График решения"
@@ -70,7 +48,7 @@
             android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".solve.SolveHello"/>
+                    android:value=".ui.activity.MainActivity"/>
         </activity>
     </application>
 
