@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.common.PlotDataContainer;
-import ru.bmstu.nastasia.difur.common.PlotDataContainer.ParamNames;
 import ru.bmstu.nastasia.difur.ui.adapters.PlotAdapter;
 
 public class SystemPlotActivity extends AppCompatActivity {
@@ -25,8 +24,8 @@ public class SystemPlotActivity extends AppCompatActivity {
 
         Bundle b = this.getIntent().getExtras();
 
-        if (b == null || !b.containsKey(ParamNames.x) || ! b.containsKey(ParamNames.y)) {
-            throw new Error("solve.PlotActivity: Not x or y array are found");
+        if (b == null) {
+            throw new Error("solve.PlotActivity: null Bundle");
         }
 
         ArrayList<PlotDataContainer> data = PlotDataContainer.genArray(b);
