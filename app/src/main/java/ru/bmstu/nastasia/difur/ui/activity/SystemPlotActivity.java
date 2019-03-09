@@ -1,4 +1,4 @@
-package ru.bmstu.nastasia.difur.solve;
+package ru.bmstu.nastasia.difur.ui.activity;
 
 
 import android.graphics.Color;
@@ -14,11 +14,10 @@ import java.util.Arrays;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.common.Arrays2Strings;
 
-public class SystemPlot extends AppCompatActivity {
+public class SystemPlotActivity extends AppCompatActivity {
 
     public static class ParamNames {
         final public static String y = "y array";
@@ -47,7 +46,7 @@ public class SystemPlot extends AppCompatActivity {
         LineAndPointFormatter seriesFormat =
                 new LineAndPointFormatter(color, Color.DKGRAY, Color.BLUE, null);
         seriesFormat.configure(this, R.xml.line_point_formatter_no_color);
-        Log.i("SystemPlot.ADD_SERIES", Arrays2Strings.arr1DtoString(y) + label);
+        Log.i("SystemPlotAct.addSeries", Arrays2Strings.arr1DtoString(y) + label);
         seriesFormat.setPointLabelFormatter(null);
         // (optional) add some smoothing to the lines: http://androidplot.com/smooth-curves-and-androidplot/
         seriesFormat.setInterpolationParams(

@@ -15,7 +15,7 @@ import android.widget.Toast;
 import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.solve.SystemRungeKutta;
-import ru.bmstu.nastasia.difur.solve.SystemPlot;
+import ru.bmstu.nastasia.difur.ui.activity.SystemPlotActivity;
 import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
 import ru.bmstu.nastasia.difur.examples.*;
 import ru.bmstu.nastasia.difur.ui.adapters.FunctionAdapter;
@@ -128,9 +128,9 @@ public class System_simple extends Fragment {
 
                 SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 100);
                 Intent childActivityIntent = new Intent(getActivity(),
-                        ru.bmstu.nastasia.difur.solve.SystemPlot.class)
-                        .putExtra(SystemPlot.ParamNames.x, solver.getX())
-                        .putExtra(SystemPlot.ParamNames.y, solver.getY());
+                        SystemPlotActivity.class)
+                        .putExtra(SystemPlotActivity.ParamNames.x, solver.getX())
+                        .putExtra(SystemPlotActivity.ParamNames.y, solver.getY());
 
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(childActivityIntent, MainActivity.Requests.REQUEST_CODE);

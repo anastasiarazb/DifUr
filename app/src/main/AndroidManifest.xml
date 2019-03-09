@@ -42,7 +42,7 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.activity.MainActivity"/>
         </activity>
-        <activity android:name=".solve.SystemPlot">
+        <activity android:name=".ui.activity.SystemPlotActivity">
             android:label="График решения"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
