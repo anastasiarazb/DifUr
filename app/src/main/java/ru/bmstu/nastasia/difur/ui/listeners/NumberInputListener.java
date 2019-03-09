@@ -1,4 +1,4 @@
-package ru.bmstu.nastasia.difur.ui.fragment;
+package ru.bmstu.nastasia.difur.ui.listeners;
 
 import android.content.Context;
 import android.text.Editable;
@@ -12,7 +12,7 @@ public class NumberInputListener implements TextWatcher {
     private Double   mValue;
     private String   mErrormessage;
 
-    NumberInputListener(Context context, EditText edittextview) {
+    public NumberInputListener(Context context, EditText edittextview) {
         this.mContext = context;
         this.mEdittextview = edittextview;
         this.mErrormessage = context.getString(R.string.warning_incorrect);
@@ -54,7 +54,7 @@ public class NumberInputListener implements TextWatcher {
                 : null;
     }
 
-    boolean checkAndSetWarning() {
+    public boolean checkAndSetWarning() {
         if (checkValue() == Boolean.TRUE) {
             return true;
         } else {

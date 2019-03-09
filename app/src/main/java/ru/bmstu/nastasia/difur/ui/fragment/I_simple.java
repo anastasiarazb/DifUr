@@ -19,6 +19,8 @@ import ru.bmstu.nastasia.difur.solve.RungeKutta;
 import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
 
 import org.mariuszgromada.math.mxparser.Function;
+import ru.bmstu.nastasia.difur.ui.listeners.FunctionInputListener;
+import ru.bmstu.nastasia.difur.ui.listeners.NumberInputListener;
 
 
 public class I_simple extends Fragment {
