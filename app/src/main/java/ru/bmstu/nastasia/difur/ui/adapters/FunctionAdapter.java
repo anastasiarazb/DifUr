@@ -42,7 +42,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         this.size = size;
     }
 
-    class InputHolder extends RecyclerView.ViewHolder {
+    public class InputHolder extends RecyclerView.ViewHolder {
 
         private TextView func_name;
         private TextInputEditText input_func;
@@ -64,7 +64,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
             });
         }
 
-        boolean checkInput() {
+        public boolean checkInput() {
             return listener.checkAndSetWarning();
         }
 
