@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.ui.listeners.FunctionInputListener;
 
@@ -85,9 +86,44 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         }
 
         public boolean isEmpty() {
-            return input_func.getText() == null || input_func.getText().toString().isEmpty();
+            return input_func.getText() == null || input_func.getText().toString().trim().isEmpty();
         }
     }
+
+    public boolean checkInputAndSetWarnings() {
+        boolean res = true;
+        for (InputHolder holder: input_holders) {
+            res &= holder.checkInputAndSetWarning();
+        }
+        return res;
+    }
+
+    public ArrayList<Function> getFunctions() {
+        ArrayList<Function> functions = new ArrayList<>(size);
+        for (InputHolder holder: input_holders) {
+            functions.add(holder.listener.getFunction());
+        }
+        return functions;
+    }
+
+    public String[] getFunctionsStrings() {
+        String[] sources = new String[size];
+        for (int i = 0; i < size; ++i) {
+            InputHolder holder = input_holders.get(i);
+            sources[i] = holder.listener.getFunctionString();
+        }
+        return sources;
+    }
+
+    public boolean hasEmpty() {
+        boolean res = false;
+        for (InputHolder holder: input_holders) {
+            res |= holder.isEmpty();
+        }
+        return res;
+    }
+
+
 
     public ArrayList<FunctionInputListener> getInputListeners() {
         ArrayList<FunctionInputListener> input_listeners = new ArrayList<>(size);
@@ -131,14 +167,6 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
     @Override
     public int getItemCount() {
         return size;
-    }
-
-    public boolean checkInputAndSetWarnings() {
-        boolean res = true;
-        for (InputHolder holder: input_holders) {
-            res &= holder.checkInputAndSetWarning();
-        }
-        return res;
     }
 
 }

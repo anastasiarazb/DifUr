@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.*;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.common.PlotDataContainer;
@@ -31,15 +30,22 @@ public class System_simple extends Fragment {
 
     private Button button_solve;
     private Button button_ok;
+    private CheckBox check_box;
+    private CardView solutions_cv;
     private EditText row_number_et;
     private EditText x1_et;
     private EditText x2_et;
     private RecyclerView rows_rv;
+    private RecyclerView solutions_rv;
     private RecyclerView inits_rv;
     private FunctionAdapter function_adapter;
+    private FunctionAdapter solutions_adapter;
     private InitsAdapter inits_adapter;
     private int rows_number;
     private Context context;
+
+    private final String Y_EQ_NAME = "y%d'";
+    private final String Y_RES_NAME = "y_res%d";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +68,9 @@ public class System_simple extends Fragment {
 
         EquationSystem default_data = EquationSystem.TEST2;
 
+        solutions_cv = view.findViewById(R.id.system_solution_cv);
+        solutions_cv.setVisibility(View.GONE);
+
         x1_et = view.findViewById(R.id.system_et_x1);
         x1_et.setText(String.valueOf(default_data.x1));
         x2_et = view.findViewById(R.id.system_et_x2);
@@ -69,10 +78,15 @@ public class System_simple extends Fragment {
         row_number_et = view.findViewById(R.id.system_row_number_et);
         rows_number = 2;  // default
 
-        function_adapter = new FunctionAdapter(rows_number, default_data.func_raws);
+        function_adapter = new FunctionAdapter(rows_number, default_data.func_raws, Y_EQ_NAME);
         rows_rv = view.findViewById(R.id.system_simple_rv);
         rows_rv.setAdapter(function_adapter);
         rows_rv.setLayoutManager(new LinearLayoutManager(this.context));
+
+        solutions_adapter = new FunctionAdapter(rows_number, default_data.results_raws, Y_RES_NAME);
+        solutions_rv = view.findViewById(R.id.system_solutions_rv);
+        solutions_rv.setAdapter(solutions_adapter);
+        solutions_rv.setLayoutManager(new LinearLayoutManager(this.context));
 
 
         inits_adapter = new InitsAdapter(rows_number, default_data.inits);
@@ -80,13 +94,28 @@ public class System_simple extends Fragment {
         inits_rv.setAdapter(inits_adapter);
         inits_rv.setLayoutManager(new LinearLayoutManager(this.context));
 
+        check_box = view.findViewById(R.id.solution_cb_n);
+
+        check_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    solutions_cv.setVisibility(View.VISIBLE);
+                } else {
+                    solutions_cv.setVisibility(View.GONE);
+                }
+            }
+        });
+
         button_ok = view.findViewById(R.id.system_ok_button);
         button_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateRowsNumber();
-                function_adapter.update(rows_number, null);
+                function_adapter.update(rows_number, null, Y_EQ_NAME);
                 function_adapter.notifyDataSetChanged();
+                solutions_adapter.update(rows_number, null, Y_RES_NAME);
+                solutions_adapter.notifyDataSetChanged();
                 inits_adapter.update(rows_number, null);
                 inits_adapter.notifyDataSetChanged();
 
@@ -101,27 +130,30 @@ public class System_simple extends Fragment {
                     Toast.makeText(context, R.string.warning_incorrect, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ArrayList<FunctionInputListener> listeners = function_adapter.getInputListeners();
-                boolean is_ok = true;
-                ArrayList<Function> functions = new ArrayList<>(listeners.size());
-                String[] func_strings = new String[listeners.size()];
-                for (int i = 0; i < listeners.size(); ++i) {
-                    FunctionInputListener listener = listeners.get(i);
-                    Boolean val = listener.checkVal();
-                    if (val != null) {
-                        is_ok &= val;
-                        functions.add(listener.getFunction());
-                        func_strings[i] = listener.getFunctionString();
-                    }
-                }
+//                ArrayList<FunctionInputListener> listeners = function_adapter.getInputListeners();
+//                boolean is_ok = true;
+//                ArrayList<Function> functions = new ArrayList<>(listeners.size());
+//                String[] func_strings = new String[listeners.size()];
+//                for (int i = 0; i < listeners.size(); ++i) {
+//                    FunctionInputListener listener = listeners.get(i);
+//                    Boolean val = listener.checkVal();
+//                    if (val != null) {
+//                        is_ok &= val;
+//                        functions.add(listener.getFunction());
+//                        func_strings[i] = listener.getFunctionString();
+//                    }
+//                }
+                ArrayList<Function> functions    = function_adapter.getFunctions();
+                String[]            func_strings = function_adapter.getFunctionsStrings();
+
                 double[] inits = inits_adapter.getValues();
                 double x1 = Double.parseDouble(x1_et.getText().toString());
                 double x2 = Double.parseDouble(x2_et.getText().toString());
-                if (!is_ok) {
-                    Toast.makeText(context, R.string.warning_incorrect, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                StringBuilder sb = new StringBuilder();
+//                if (!is_ok) {
+//                    Toast.makeText(context, R.string.warning_incorrect, Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                StringBuilder sb = new StringBuilder();
 //                for (Function f: functions) {
 //                    sb.append(f.getFunctionExpressionString()).append('\n');
 //                }
@@ -162,12 +194,12 @@ public class System_simple extends Fragment {
 
     private boolean checkFunctions() {
         boolean res = true;
-        for (int i = 0; i < rows_number; ++i) {
-            res &= ((FunctionAdapter.InputHolder)rows_rv.findViewHolderForAdapterPosition(i)).checkInput();
-        }
+        res &= function_adapter.checkInputAndSetWarnings();
         res &= inits_adapter.checkInput();
         res &= !x1_et.getText().toString().isEmpty();
         res &= !x2_et.getText().toString().isEmpty();
+        res &= (!check_box.isChecked()
+                || solutions_adapter.checkInputAndSetWarnings());
         return res;
     }
 

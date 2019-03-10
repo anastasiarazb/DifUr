@@ -45,9 +45,14 @@ public class FunctionInputListener implements TextWatcher {
         this.innerFuncName = sb.toString();
     }
 
+    public boolean isEmpty() {
+        value = mEdittextview.getEditableText().toString();
+        return value.trim().isEmpty();
+    }
+
     public Boolean checkVal() {
-        value = mEdittextview.getEditableText().toString().replace('÷', '/');
-        if (value.trim().isEmpty()) {
+        value = mEdittextview.getEditableText().toString().replace('÷', '/').trim();
+        if (value.isEmpty()) {
             return null;
         }
         mFunction = new Function(innerFuncName + "=" + value);
