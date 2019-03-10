@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class EquationSystem {
     public String[] func_raws;
+    public String[] results_raws;
     public double[] inits;
     public double x1;
     public double x2;
@@ -34,7 +35,7 @@ public class EquationSystem {
         };
         eq.inits = new double[] { 0.8, 2};
         eq.x1 = 0.;
-        eq.x2 = 1.;
+        eq.x2 = 8.;
         return eq;
     }
 
