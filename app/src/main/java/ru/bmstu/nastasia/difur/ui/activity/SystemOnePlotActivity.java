@@ -1,10 +1,13 @@
 package ru.bmstu.nastasia.difur.ui.activity;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import com.androidplot.ui.HorizontalPositioning;
 import com.androidplot.ui.VerticalPositioning;
 import com.androidplot.util.PixelUtils;
@@ -26,6 +29,8 @@ public class SystemOnePlotActivity extends AppCompatActivity {
     private XYPlot plot;
     private String[] equations;
     private MathView equations_tex;
+    private Bundle parent_bundle;
+    Toolbar toolbar;
 
     private Double[] x;
 
@@ -65,15 +70,21 @@ public class SystemOnePlotActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.solve_system_one_plot);
 
+        toolbar = findViewById(R.id.toolbar_system_one_plot);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        Bundle b = this.getIntent().getExtras();
 
-        if (b == null) {
+        parent_bundle = this.getIntent().getExtras();
+
+        if (parent_bundle == null) {
             throw new Error("solve.PlotActivity: null Bundle");
         }
 
-        ArrayList<PlotDataContainer> data = PlotDataContainer.genArray(b);
-        equations = b.getStringArray(ParamNames.equation);
+        ArrayList<PlotDataContainer> data = PlotDataContainer.genArray(parent_bundle);
+        equations = parent_bundle.getStringArray(ParamNames.equation);
         equations_tex = findViewById(R.id.tex_all_solutions);
         equations_tex.setText(prettyEquationsOutput());
         plot = findViewById(R.id.system_XYPlot);
@@ -97,10 +108,27 @@ public class SystemOnePlotActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId() == android.R.id.home)
-        {
-            finish();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.menu_switch2multiple_plots:
+                Intent childActivityIntent = new Intent(this,
+                        SystemPlotActivity.class)
+                        .putExtras(parent_bundle);
+
+                if (childActivityIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(childActivityIntent, MainActivity.Requests.REQUEST_CODE);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_system_one_plot, menu);
+        return true;
     }
 }

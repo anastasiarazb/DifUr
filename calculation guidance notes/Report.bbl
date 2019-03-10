@@ -1,0 +1,50 @@
+\begin{thebibliography}{1}
+\def\selectlanguageifdefined#1{
+\expandafter\ifx\csname date#1\endcsname\relax
+\else\language\csname l@#1\endcsname\fi}
+\ifx\undefined\url\def\url#1{{\small #1}}\else\fi
+\ifx\undefined\BibUrl\def\BibUrl#1{\url{#1}}\else\fi
+\ifx\undefined\BibAnnote\long\def\BibAnnote#1{(#1)}\else\fi
+\ifx\undefined\BibEmph\def\BibEmph#1{\emph{#1}}\else\fi
+
+\bibitem{cite:Amosov}
+\selectlanguageifdefined{russian}
+Амосов А.~А.~Дубинский Ю.~А.~Копченова Н.~В.
+  Вычислительные методы для инженеров:
+  Учеб. пособие.
+\newblock Высш. шк., 1994.
+\newblock {С.}~554.{}
+
+\bibitem{cite:Filippov}
+\selectlanguageifdefined{russian}
+Филиппов~А.~Ф. Сборник задач по
+  дифференциальным уравнениям.
+\newblock НИЦ «Регулярная и хаотическая
+  динамика», 2000.
+\newblock {С.}~176.{}
+
+\bibitem{cite:Coursera_about}
+\selectlanguageifdefined{russian}
+Coursera | Online Courses \& Credentials by Top Educators
+  [Электронный ресурс]. URL:~https://www.coursera.org/
+  \BibAnnote{дата обращения: 30.09.2018}.{}
+
+\bibitem{cite:Udemy_about}
+\selectlanguageifdefined{russian}
+Learn About Udemy culture, mission, and careers | About Us
+  [Электронный ресурс]. URL:~https://about.udemy.com/
+  \BibAnnote{дата обращения: 30.09.2018}.{}
+
+\bibitem{cite:Intuit_about}
+\selectlanguageifdefined{russian}
+НОУ ИНТУИТ | О проекте [Электронный ресурс].
+  URL:~https://www.intuit.ru/content/about-project \BibAnnote{дата
+  обращения: 30.09.2018}.{}
+
+\bibitem{cite:Stepik_about}
+\selectlanguageifdefined{russian}
+O нас -- Stepik [Электронный ресурс].
+  URL:~https://welcome.stepik.org \BibAnnote{дата обращения:
+  30.09.2018}.{}
+
+\end{thebibliography}
