@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.solve.FuncCalculus;
 import ru.bmstu.nastasia.difur.ui.activity.PlotActivity;
 import ru.bmstu.nastasia.difur.solve.RungeKutta;
 import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
@@ -107,10 +108,11 @@ public class I_simple extends Fragment {
                     // Generate user solution points
                     Function solution = listener_solution.getFunction();
                     Double[] x = solver.getX();
-                    Double[] y = new Double[x.length];
-                    for (int i = 0; i < y.length; ++i) {
-                        y[i] = solution.calculate(x[i]);
-                    }
+                    Double[] y = FuncCalculus.calcY(solution, x);
+//                    Double[] y = new Double[x.length];
+//                    for (int i = 0; i < y.length; ++i) {
+//                        y[i] = solution.calculate(x[i]);
+//                    }
                     childActivityIntent
                             .putExtra(ParamNames.y2, y)
                             .putExtra(ParamNames.user_solution, input_solution.getEditableText().toString());
