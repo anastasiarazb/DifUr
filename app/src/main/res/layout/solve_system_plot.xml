@@ -9,18 +9,27 @@
             android:scrollbars="horizontal"
             tools:context=".ui.activity.SystemPlotActivity"
             android:layout_gravity="center">
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_system_plots"
+                style="@style/Toolbar"/>
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/system_plots_rv"
-                android:scrollbars="vertical"
-                android:fillViewport="true">
-        </android.support.v7.widget.RecyclerView>
-    </RelativeLayout>
+                android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/system_plots_rv"
+                    android:scrollbars="vertical"
+                    android:fillViewport="true">
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </LinearLayout>
+
 
 
 </ScrollView>
