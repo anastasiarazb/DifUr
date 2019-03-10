@@ -42,7 +42,8 @@ public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
 
         private Context context;
 
-        private int formatter = R.xml.line_point_formatter_with_labels;
+        private int formatter1 = R.xml.line_point_formatter_with_labels;
+        private int formatter2 = R.xml.line_point_formatter_with_labels_2;
 
         PlotHolder(View itemView) {
             super(itemView);
@@ -59,11 +60,11 @@ public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
             y2 = data.getY2();
             PixelUtils.init(context);
             String name = data.getEquation().split("=")[0].trim().replaceAll("'", "");
-            addSeries(x, y, name, R.xml.line_point_formatter_with_labels);
+            addSeries(x, y, name, formatter1);
             if (data.hasUserSolution()) {
                 tex_user_solution.setText("$$" + data.getUserSolution() + "$$");
                 itemView.findViewById(R.id.user_solution_container).setVisibility(View.VISIBLE);
-                addSeries(x, y2, "y" + number+ "_user", formatter);
+                addSeries(x, y2, "y" + number+ "_user", formatter2);
             } else {
                 itemView.findViewById(R.id.user_solution_container).setVisibility(View.GONE);
             }
