@@ -22,17 +22,20 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
     private ArrayList<InputHolder> input_holders;
     private String[] default_functions;
 
-    public FunctionAdapter(int size, @Nullable String[] default_functions) {
-        update(size, default_functions);
+    public FunctionAdapter(int size, @Nullable String[] default_functions, @Nullable String funcname_formatstring) {
+        update(size, default_functions, funcname_formatstring);
     }
 
-    public void update(int size, @Nullable String[] default_functions) {
+    public void update(int size, @Nullable String[] default_functions, @Nullable String funcname_formatstring) {
         this.size = size;
         this.default_functions = default_functions;
         src  = new ArrayList<>(size);
         input_holders = new ArrayList<>(size);
+        if (funcname_formatstring == null) {
+            funcname_formatstring = "f%d";
+        }
         for (int i = 1; i <= size; ++i) {
-            src.add("y" + i + "' = ");
+            src.add(String.format(funcname_formatstring, i) + " = ");
             input_holders.add(null);
         }
 
@@ -64,7 +67,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
             });
         }
 
-        public boolean checkInput() {
+        public boolean checkInputAndSetWarning() {
             return listener.checkAndSetWarning();
         }
 
@@ -128,6 +131,14 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
     @Override
     public int getItemCount() {
         return size;
+    }
+
+    public boolean checkInputAndSetWarnings() {
+        boolean res = true;
+        for (InputHolder holder: input_holders) {
+            res &= holder.checkInputAndSetWarning();
+        }
+        return res;
     }
 
 }
