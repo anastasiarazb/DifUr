@@ -17,33 +17,49 @@ import ru.bmstu.nastasia.difur.ui.listeners.FunctionInputListener;
 import java.util.ArrayList;
 
 public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputHolder> {
+
     private int size;
 
-    private ArrayList<String>   src;
-    private ArrayList<InputHolder> input_holders;
-    private String[] default_functions;
-
-    public FunctionAdapter(int size, @Nullable String[] default_functions, @Nullable String funcname_formatstring) {
-        update(size, default_functions, funcname_formatstring);
+    public enum FunctionType {
+        DIFF_EQUATION,
+        Y_FROM_X
     }
 
-    public void update(int size, @Nullable String[] default_functions, @Nullable String funcname_formatstring) {
-        this.size = size;
-        this.default_functions = default_functions;
-        src  = new ArrayList<>(size);
-        input_holders = new ArrayList<>(size);
+    private ArrayList<String>      src;
+    private ArrayList<InputHolder> input_holders;
+    private String[]     default_functions;
+    private String       funcname_formatstring;
+    private String       func_argnames;
+    private FunctionType func_type;
+
+    public FunctionAdapter(int size, @NonNull FunctionType func_type, @Nullable String funcname_formatstring,
+                           @Nullable String[] default_functions) {
         if (funcname_formatstring == null) {
             funcname_formatstring = "f%d";
         }
+        this.funcname_formatstring = funcname_formatstring;
+        this.func_type = func_type;
+        update(size, default_functions);
+    }
+
+    public void update(int size, @Nullable String[] default_functions) {
+        this.size = size;
+        this.default_functions = default_functions;
+        switch (func_type) {
+            case DIFF_EQUATION:
+                this.func_argnames = FunctionInputListener.HeadlineGenerator.f_x_y1_yn(size);
+                break;
+            case Y_FROM_X:
+                this.func_argnames = FunctionInputListener.HeadlineGenerator.f_x;
+        }
+        src  = new ArrayList<>(size);
+        input_holders = new ArrayList<>(size);
+
         for (int i = 1; i <= size; ++i) {
             src.add(String.format(funcname_formatstring, i) + " = ");
             input_holders.add(null);
         }
 
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 
     public class InputHolder extends RecyclerView.ViewHolder {
@@ -53,11 +69,11 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         private FunctionInputListener listener;
 
 
-        InputHolder(View itemView, int n) {
+        InputHolder(View itemView, String func_argnames) {
             super(itemView);
             func_name = itemView.findViewById(R.id.adapter_text_view);
             input_func = itemView.findViewById(R.id.adapter_input_fxy);
-            listener = new FunctionInputListener(itemView.getContext(), input_func, n);
+            listener = new FunctionInputListener(itemView.getContext(), input_func, func_argnames);
             input_func.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -142,7 +158,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.InputH
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutIdForInputItem, parent, shouldAttachToParentImmediately);
-        FunctionAdapter.InputHolder viewHolder = new FunctionAdapter.InputHolder(view, size);
+        FunctionAdapter.InputHolder viewHolder = new FunctionAdapter.InputHolder(view, func_argnames);
 
         return viewHolder;
     }

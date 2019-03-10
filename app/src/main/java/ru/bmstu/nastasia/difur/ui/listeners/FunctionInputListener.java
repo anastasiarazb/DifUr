@@ -19,6 +19,26 @@ public class FunctionInputListener implements TextWatcher {
     private String innerFuncName;
     private String func_name;
 
+    public static class HeadlineGenerator {
+
+        public static String f_x = "f(x)";
+        public static String f_t = "f(t)";
+
+        public static String f_x_y1_yn(int n) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("f(x");
+            for (int i = 1; i <= n; ++i) {
+                sb.append(", y").append(i);
+            }
+            sb.append(')');
+            return sb.toString();
+        }
+
+        public static String f_one_arg(String arg_name) {
+            return "(" + arg_name + ")";
+        }
+    }
+
     public FunctionInputListener(Context context, TextInputEditText edittextview, @Nullable String func_headline) {
         this.mContext = context;
         this.mEdittextview = edittextview;
@@ -26,24 +46,25 @@ public class FunctionInputListener implements TextWatcher {
         this.innerFuncName = func_headline != null
                 ? func_headline
                 : "f(x)";
+        Log.d("InnerFuncN", innerFuncName);
     }
 
     public void setFuncName(String name) {
         func_name = name;
     }
 
-    public FunctionInputListener(Context context, TextInputEditText edittextview, int arg_num) {
-        this.mContext = context;
-        this.mEdittextview = edittextview;
-        this.mErrormessage = context.getString(R.string.warning_incorrect);
-        StringBuilder sb = new StringBuilder();
-        sb.append("f(x");
-        for (int i = 1; i <= arg_num; ++i) {
-            sb.append(", y").append(i);
-        }
-        sb.append(')');
-        this.innerFuncName = sb.toString();
-    }
+//    public FunctionInputListener(Context context, TextInputEditText edittextview, int arg_num) {
+//        this.mContext = context;
+//        this.mEdittextview = edittextview;
+//        this.mErrormessage = context.getString(R.string.warning_incorrect);
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("f(x");
+//        for (int i = 1; i <= arg_num; ++i) {
+//            sb.append(", y").append(i);
+//        }
+//        sb.append(')');
+//        this.innerFuncName = sb.toString();
+//    }
 
     public boolean isEmpty() {
         value = mEdittextview.getEditableText().toString();

@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import org.mariuszgromada.math.mxparser.Function;
 import ru.bmstu.nastasia.difur.R;
 import ru.bmstu.nastasia.difur.common.PlotDataContainer;
+import ru.bmstu.nastasia.difur.solve.FuncCalculus;
 import ru.bmstu.nastasia.difur.solve.SystemRungeKutta;
 import ru.bmstu.nastasia.difur.ui.activity.SystemOnePlotActivity;
 import ru.bmstu.nastasia.difur.ui.activity.SystemPlotActivity;
@@ -22,7 +23,7 @@ import ru.bmstu.nastasia.difur.ui.activity.MainActivity;
 import ru.bmstu.nastasia.difur.examples.*;
 import ru.bmstu.nastasia.difur.ui.adapters.FunctionAdapter;
 import ru.bmstu.nastasia.difur.ui.adapters.InitsAdapter;
-import ru.bmstu.nastasia.difur.ui.listeners.FunctionInputListener;
+import ru.bmstu.nastasia.difur.ui.adapters.FunctionAdapter.FunctionType;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class System_simple extends Fragment {
     private Context context;
 
     private final String Y_EQ_NAME = "y%d'";
-    private final String Y_RES_NAME = "y_res%d";
+    private final String Y_RES_NAME = "y%d(x)";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,12 +79,12 @@ public class System_simple extends Fragment {
         row_number_et = view.findViewById(R.id.system_row_number_et);
         rows_number = 2;  // default
 
-        function_adapter = new FunctionAdapter(rows_number, default_data.func_raws, Y_EQ_NAME);
+        function_adapter = new FunctionAdapter(rows_number, FunctionType.DIFF_EQUATION, Y_EQ_NAME, default_data.func_raws);
         rows_rv = view.findViewById(R.id.system_simple_rv);
         rows_rv.setAdapter(function_adapter);
         rows_rv.setLayoutManager(new LinearLayoutManager(this.context));
 
-        solutions_adapter = new FunctionAdapter(rows_number, default_data.results_raws, Y_RES_NAME);
+        solutions_adapter = new FunctionAdapter(rows_number, FunctionType.Y_FROM_X, Y_RES_NAME, default_data.results_raws);
         solutions_rv = view.findViewById(R.id.system_solutions_rv);
         solutions_rv.setAdapter(solutions_adapter);
         solutions_rv.setLayoutManager(new LinearLayoutManager(this.context));
@@ -112,9 +113,9 @@ public class System_simple extends Fragment {
             @Override
             public void onClick(View view) {
                 updateRowsNumber();
-                function_adapter.update(rows_number, null, Y_EQ_NAME);
+                function_adapter.update(rows_number, null);
                 function_adapter.notifyDataSetChanged();
-                solutions_adapter.update(rows_number, null, Y_RES_NAME);
+                solutions_adapter.update(rows_number, null);
                 solutions_adapter.notifyDataSetChanged();
                 inits_adapter.update(rows_number, null);
                 inits_adapter.notifyDataSetChanged();
@@ -171,6 +172,15 @@ public class System_simple extends Fragment {
                         .putExtra(PlotDataContainer.ParamNames.x, solver.getX())
                         .putExtra(PlotDataContainer.ParamNames.y, solver.getY())
                         .putExtra(PlotDataContainer.ParamNames.equation, func_strings);
+
+                if (check_box.isChecked()) {
+                    ArrayList<Function> solutions         = solutions_adapter.getFunctions();
+                    String[]            solutions_strings = solutions_adapter.getFunctionsStrings();
+                    Double[][] y_user = FuncCalculus.calcArrayY(solutions, solver.getX());
+                    childActivityIntent
+                            .putExtra(PlotDataContainer.ParamNames.user_solution, solutions_strings)
+                            .putExtra(PlotDataContainer.ParamNames.y2, y_user);
+                }
 
                 if (childActivityIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(childActivityIntent, MainActivity.Requests.REQUEST_CODE);
