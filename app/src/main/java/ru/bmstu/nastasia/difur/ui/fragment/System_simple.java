@@ -134,8 +134,8 @@ public class System_simple extends Fragment {
 
                 SystemRungeKutta solver = new SystemRungeKutta(functions, inits, x1, x2, 100);
                 Intent childActivityIntent = new Intent(getActivity(),
-                        SystemOnePlotActivity.class)
-//                        SystemPlotActivity.class)
+//                        SystemOnePlotActivity.class)
+                        SystemPlotActivity.class)
                         .putExtra(PlotDataContainer.ParamNames.x, solver.getX())
                         .putExtra(PlotDataContainer.ParamNames.y, solver.getY())
                         .putExtra(PlotDataContainer.ParamNames.equation, func_strings);
