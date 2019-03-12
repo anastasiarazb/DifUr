@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Toolbar toolbar;
-    private int navigationSelectedItem = 1;
+    private int navigationSelectedItem = 0;
     private I_simple fragment_i_simple;
     private System_simple fragment_system_simple;
     private Names names;
