@@ -32,7 +32,7 @@
                         android:paddingLeft="15dp">
                     <TextView
                             android:id="@+id/textView"
-                            android:text="y' = "
+                            android:text="y'(x, y) = "
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
