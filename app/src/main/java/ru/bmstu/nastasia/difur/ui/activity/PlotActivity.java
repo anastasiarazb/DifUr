@@ -57,11 +57,17 @@ public class PlotActivity extends AppCompatActivity {
         }
 
         if (b.containsKey(ParamNames.equation)) {
-            tex_equation.setText("$$y' = " + b.getString(ParamNames.equation) + "$$");
+            String eq = b.getString(ParamNames.equation)
+                    .replaceAll("\\(", "{(")
+                    .replaceAll("\\)", ")}");
+            tex_equation.setText("$$y'(x, y) = " + eq + "$$");
         }
 
         if (b.containsKey(ParamNames.user_solution)) {
-            tex_user_solution.setText("$$y(x) = " + b.getString(ParamNames.user_solution) + "$$");
+            String eq = b.getString(ParamNames.user_solution)
+                    .replaceAll("\\(", "{(")
+                    .replaceAll("\\)", ")}");
+            tex_user_solution.setText("$$y(x) = " + eq + "$$");
             findViewById(R.id.user_solution_container).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.user_solution_container).setVisibility(View.GONE);
@@ -89,12 +95,12 @@ public class PlotActivity extends AppCompatActivity {
         // create formatters to use for drawing a series using LineAndPointRenderer and configure them from xml:
         PixelUtils.init(getBaseContext());
 
-        addSeries(x, y, getBaseContext().getString(R.string.plot_series_solution), R.xml.line_point_formatter_with_labels);
-
         if (b.containsKey(ParamNames.y2)) {
             addSeries(x, (Double[])b.get(ParamNames.y2), getBaseContext().getString(R.string.plot_series_user_solution),
                     R.xml.line_point_formatter_with_labels_2);
         }
+
+        addSeries(x, y, getBaseContext().getString(R.string.plot_series_solution), R.xml.line_point_formatter_with_labels_1);
         plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
         plot.getGraph().getDomainGridLinePaint().setColor(Color.TRANSPARENT);
         plot.getGraph().getDomainSubGridLinePaint().setColor(Color.TRANSPARENT);
