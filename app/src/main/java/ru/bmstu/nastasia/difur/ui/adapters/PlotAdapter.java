@@ -14,6 +14,7 @@ import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
 import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.common.FormulaToTex;
 import ru.bmstu.nastasia.difur.common.PlotDataContainer;
 
 import java.util.ArrayList;
@@ -52,14 +53,14 @@ public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
         }
 
         void setData(PlotDataContainer data, int number) {
-            tex_equation.setText("$$" + data.getEquation() + "$$");
+            tex_equation.setText("$$" + FormulaToTex.protectSubformulas(data.getEquation()) + "$$");
             x = data.getX();
             y = data.getY();
             y2 = data.getY2();
             PixelUtils.init(context);
             String name = data.getEquation().split("=")[0].trim().replaceAll("'", "");
             if (data.hasUserSolution()) {
-                tex_user_solution.setText("$$" + data.getUserSolution() + "$$");
+                tex_user_solution.setText("$$" + FormulaToTex.protectSubformulas(data.getUserSolution()) + "$$");
                 itemView.findViewById(R.id.user_solution_container).setVisibility(View.VISIBLE);
                 addSeries(x, y2, "y" + number+ "_user", formatter2);
             } else {

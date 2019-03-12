@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.common.FormulaToTex;
 import ru.bmstu.nastasia.difur.common.PlotDataContainer.ParamNames;
 
 public class PlotActivity extends AppCompatActivity {
@@ -57,16 +58,12 @@ public class PlotActivity extends AppCompatActivity {
         }
 
         if (b.containsKey(ParamNames.equation)) {
-            String eq = b.getString(ParamNames.equation)
-                    .replaceAll("\\(", "{(")
-                    .replaceAll("\\)", ")}");
+            String eq = FormulaToTex.protectSubformulas(b.getString(ParamNames.equation));
             tex_equation.setText("$$y'(x, y) = " + eq + "$$");
         }
 
         if (b.containsKey(ParamNames.user_solution)) {
-            String eq = b.getString(ParamNames.user_solution)
-                    .replaceAll("\\(", "{(")
-                    .replaceAll("\\)", ")}");
+            String eq = FormulaToTex.protectSubformulas(b.getString(ParamNames.user_solution));
             tex_user_solution.setText("$$y(x) = " + eq + "$$");
             findViewById(R.id.user_solution_container).setVisibility(View.VISIBLE);
         } else {
