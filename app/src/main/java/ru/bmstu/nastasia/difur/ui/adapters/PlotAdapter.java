@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.androidplot.util.PixelUtils;
 import com.androidplot.xy.*;
 import io.github.kexanie.library.MathView;
 import ru.bmstu.nastasia.difur.R;
-import ru.bmstu.nastasia.difur.common.Arrays2Strings;
 import ru.bmstu.nastasia.difur.common.PlotDataContainer;
 
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
 
         private Context context;
 
-        private int formatter1 = R.xml.line_point_formatter_with_labels;
+        private int formatter1 = R.xml.line_point_formatter_with_labels_1;
         private int formatter2 = R.xml.line_point_formatter_with_labels_2;
 
         PlotHolder(View itemView) {
@@ -60,7 +58,6 @@ public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
             y2 = data.getY2();
             PixelUtils.init(context);
             String name = data.getEquation().split("=")[0].trim().replaceAll("'", "");
-            addSeries(x, y, name, formatter1);
             if (data.hasUserSolution()) {
                 tex_user_solution.setText("$$" + data.getUserSolution() + "$$");
                 itemView.findViewById(R.id.user_solution_container).setVisibility(View.VISIBLE);
@@ -68,6 +65,7 @@ public class PlotAdapter extends RecyclerView.Adapter<PlotAdapter.PlotHolder>  {
             } else {
                 itemView.findViewById(R.id.user_solution_container).setVisibility(View.GONE);
             }
+            addSeries(x, y, name, formatter1);
             plot.setDomainBoundaries(x[0], x[x.length-1], BoundaryMode.FIXED);
             plot.getGraph().getDomainGridLinePaint().setColor(Color.TRANSPARENT);
             plot.getGraph().getDomainSubGridLinePaint().setColor(Color.TRANSPARENT);
