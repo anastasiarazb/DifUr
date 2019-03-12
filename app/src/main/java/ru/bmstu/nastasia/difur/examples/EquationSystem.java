@@ -15,6 +15,8 @@ public class EquationSystem {
 
     public final static EquationSystem TEST2 = test2();
 
+    public final static EquationSystem TEST3 = test3();
+
     public static EquationSystem test1() {
         EquationSystem eq = new EquationSystem();
         eq.func_raws = new String[] {
@@ -36,6 +38,20 @@ public class EquationSystem {
         eq.inits = new double[] { 0.8, 2};
         eq.x1 = 0.;
         eq.x2 = 8.;
+        return eq;
+    }
+
+    public static EquationSystem test3() {
+        EquationSystem eq = new EquationSystem();
+        eq.func_raws = new String[] {
+                "-25*y + cos(x) + 25*sin(x)"
+        };
+        eq.results_raws = new String[] {
+                "sin(x) + e^(-25*x)"
+        };
+        eq.inits = new double[] { 0.8};
+        eq.x1 = 2.2;
+        eq.x2 = 8;
         return eq;
     }
 

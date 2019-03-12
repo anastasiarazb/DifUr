@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import ru.bmstu.nastasia.difur.R;
+import ru.bmstu.nastasia.difur.examples.EquationSystem;
 import ru.bmstu.nastasia.difur.solve.FuncCalculus;
 import ru.bmstu.nastasia.difur.ui.activity.PlotActivity;
 import ru.bmstu.nastasia.difur.solve.RungeKutta;
@@ -62,12 +63,13 @@ public class I_simple extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_du_1_simple, container, false);
 
         initFields(view);
-
+        setDefaults();
 
         return view;
     }
 
     private void initFields(View view) {
+
         solution_cv = view.findViewById(R.id.solution_cv_1);
         solution_cv.setVisibility(View.GONE);
         input_solution_cb = view.findViewById(R.id.solution_cb_1);
@@ -152,6 +154,17 @@ public class I_simple extends Fragment {
         input_x2.addTextChangedListener(listener_x2);
 
         input_solution = view.findViewById(R.id.input_solution_1);
+
+    }
+
+    private void setDefaults() {
+
+        EquationSystem defaults = EquationSystem.TEST3;
+        input_fxy.setText(defaults.func_raws[0]);
+        input_solution.setText(defaults.results_raws[0]);
+        input_y1.setText(String.valueOf(defaults.x1));
+        input_y2.setText(String.valueOf(defaults.inits[0]));
+        input_x2.setText(String.valueOf(defaults.x2));
 
     }
 
