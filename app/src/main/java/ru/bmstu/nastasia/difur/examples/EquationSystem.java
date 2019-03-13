@@ -35,6 +35,10 @@ public class EquationSystem {
                 "y2",
                 "cos(3*x)-4*y1"
         };
+        eq.results_raws = new String[] {
+                "sin(2*x)*(0.25*sin(x) + 0.05*sin(5*x)+1) + cos(2*x)*(-0.25*cos(x) + 0.05*cos(5*x) + 1)",
+                "0.5*(sin(2*x)*(cos(x) - 0.2*cos(5*x) - 4) + (sin(x) + 0.2*sin(5*x) + 4)*cos(2*x))"
+        };
         eq.inits = new double[] { 0.8, 2};
         eq.x1 = 0.;
         eq.x2 = 8.;
